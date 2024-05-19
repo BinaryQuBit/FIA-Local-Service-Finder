@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
+import Header from './Header';
+import Footer from './Footer';
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -12,6 +14,11 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!email || !password || !confirmPassword) {
+      setError('All fields are required!');
+      return;
+    }
 
     if (password !== confirmPassword) {
       setError('Passwords do not match!');
@@ -37,42 +44,46 @@ function Register() {
   };
 
   return (
-    <div className="register-container">
-      <h2>Register</h2>
-      {error && <div className="error-message">{error}</div>}
-      {showAlert && (
-        <div className="custom-alert">
-          Your account is successfully created!
-        </div>
-      )}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Confirm Password:</label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Register</button>
-      </form>
-      <button onClick={() => navigate('/')} className="back-button">BACK</button>
+    <div className="register">
+      <Header />
+      <div className="register-container">
+        <h2>Register</h2>
+        {error && <div className="error-message">{error}</div>}
+        {showAlert && (
+          <div className="custom-alert">
+            Your account is successfully created!
+          </div>
+        )}
+        <form onSubmit={handleSubmit}>
+          <div>
+            <input
+              type="email"
+              placeholder="Email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+          <button type="submit" className="submit-button">Register</button>
+        </form>
+        <button onClick={() => navigate('/')} className="back-button">BACK</button>
+      </div>
+      <Footer />
     </div>
   );
 }

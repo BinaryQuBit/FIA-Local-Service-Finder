@@ -1,5 +1,6 @@
 import React, { useState, useEffect  } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './Home.css';
 import Header from './Header';
 import Footer from './Footer';
@@ -10,14 +11,20 @@ function Home() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const accounts = JSON.parse(localStorage.getItem('accounts')) || {};
+    if (!email || !password) {
+      setError('All fields are required!');
+      return;
+    }
 
-    if (accounts[email] && accounts[email].password === password) {
-      navigate('/welcome', { state: { email } });
-    } else {
+    try {
+      const response = await axios.post('http://localhost:8080/api/users/login', { email, password });
+      if (response.status === 200) {
+        navigate('/welcome', { state: { email } });
+      }
+    } catch (error) {
       setError('Invalid email or password');
     }
   };

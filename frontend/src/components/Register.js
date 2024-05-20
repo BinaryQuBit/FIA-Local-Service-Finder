@@ -12,35 +12,41 @@ function Register() {
   const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!email || !password || !confirmPassword) {
       setError('All fields are required!');
       return;
     }
-
+  
     if (password !== confirmPassword) {
       setError('Passwords do not match!');
       return;
     }
-
-    const accounts = JSON.parse(localStorage.getItem('accounts')) || {};
-
-    if (accounts[email]) {
-      setError('Account already exists with this email!');
-      return;
+  
+    try {
+      const response = await fetch('http://localhost:8080/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+  
+      if (response.ok) {
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+          navigate('/');
+        }, 2000);
+      } else {
+        const result = await response.text();
+        setError(result);
+      }
+    } catch (error) {
+      setError('An error occurred while registering');
     }
-
-    accounts[email] = { password };
-    localStorage.setItem('accounts', JSON.stringify(accounts));
-
-    setShowAlert(true);
-
-    setTimeout(() => {
-      setShowAlert(false);
-      navigate('/');
-    }, 2000);
   };
 
   return (

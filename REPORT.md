@@ -13,6 +13,7 @@
 
 3. [Solution](#solution)
 
+
 ## Introduction
 
 - Give a brief description of the design and a summary of the relevant background information related to the topic. Give a rationale about what is needed and why.
@@ -22,11 +23,13 @@
 ## Design Problem
 This will have the following:
 
+
 ### Problem Definition
 Write a problem statement of the project. 
 
 ### Design Requirements
 This will have the following:
+
 
 #### Functions
 

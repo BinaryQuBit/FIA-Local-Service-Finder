@@ -11,7 +11,7 @@
         <br>&nbsp;&nbsp;&nbsp;&nbsp;2.2.2 [Objectives](#objectives)
         <br>&nbsp;&nbsp;&nbsp;&nbsp;2.2.3 [Constraints](#constraints)
 
-3. [Solution](#solution) ......................................................................... 7
+3. [Solution](#solution)
 
 ## Introduction
 

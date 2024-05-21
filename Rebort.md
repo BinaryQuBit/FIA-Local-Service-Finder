@@ -1,14 +1,15 @@
-# Table of Contents
+# FIA-Local Service Finder
 
-1. [Introduction](#introduction) ............................................................... 5
-2. [Design Problem](#design-problem) ...................................................... 6
+## Table of Contents
 
-    2.1 [Problem Definition](#problem-definition) ................................... 6
+1. [Introduction](#introduction)
 
-    2.2 [Design Requirements](#design-requirements) ........................... 6
-        2.2.1 [Functions](#functions) ......................................................... 6
-        2.2.2 [Objectives](#objectives) ..................................................... 6
-        2.2.3 [Constraints](#constraints) .................................................... 6
+2. [Design Problem](#design-problem)<br>
+    2.1 [Problem Definition](#problem-definition)<br>
+    2.2 [Design Requirements](#design-requirements)
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;2.2.1 [Functions](#functions)
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;2.2.2 [Objectives](#objectives)
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;2.2.3 [Constraints](#constraints)
 
 3. [Solution](#solution) ......................................................................... 7
 
@@ -19,13 +20,13 @@
 - Do not put any detailed results of your work here.
 
 ## Design Problem
-...
+This will have the following:
 
 ### Problem Definition
 Write a problem statement of the project. 
 
 ### Design Requirements
-...
+This will have the following:
 
 #### Functions
 

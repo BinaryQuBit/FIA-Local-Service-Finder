@@ -16,16 +16,13 @@
 
 ## Introduction
 
-- Give a brief description of the design and a summary of the relevant background information related to the topic. Give a rationale about what is needed and why.
-- Give the reader an overview of what is in the next sections.
-- Do not put any detailed results of your work here.
+Local businesses frequently face challenges in growing their customer base due to intense competition, which result in their websites ranking lower in search results. To solve this issue, we are designing a platform called "FIA (Find It ALL)-Local-Service-Finder" that aims to enhance the online visibility of local businesses. This platform allows users to list their services as well as request services, thereby fostering a mutually beneficial ecosystem for businesses and customers alike.
 
 ## Design Problem
-This will have the following:
-
 
 ### Problem Definition
-Write a problem statement of the project. 
+
+Local businesses often struggle to grow due to high competition and lack of effective SEO (Search Engine Optimization), causing their websites to rank lower in search results. To address this issue, we are creating a platform where users can both list their services and request services, helping local businesses improve their online visibility and attract more customers.
 
 ### Design Requirements
 This will have the following:

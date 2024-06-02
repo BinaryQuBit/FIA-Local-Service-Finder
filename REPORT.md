@@ -16,16 +16,17 @@
 
 # Introduction
 
-Local businesses frequently face challenges in growing their customer base due to intense competition, which result in their websites ranking lower in search results. To solve this issue, we are designing a platform called "FIA (Find It ALL)-Local-Service-Finder" that aims to enhance the online visibility of local businesses. This platform allows users to list their services as well as request services, thereby fostering a mutually beneficial ecosystem for businesses and customers alike.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Local businesses frequently face challenges in growing their customer base due to intense competition, which result in their websites ranking lower in search results. To solve this issue, we are designing a platform called "FIA (Find It ALL)-Local-Service-Finder" that aims to enhance the online visibility of local businesses. This platform allows users to list their services as well as request services, thereby fostering a mutually beneficial ecosystem for businesses and customers alike.
 
 # Design Problem
 
 ## Problem Definition
 
-Local businesses often struggle to grow due to high competition and lack of effective SEO (Search Engine Optimization), causing their websites to rank lower in search results. To address this issue, we are creating a platform where users can both list their services and request services, helping local businesses improve their online visibility and attract more customers.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Local businesses often struggle to grow due to high competition and lack of effective SEO (Search Engine Optimization), causing their websites to rank lower in search results. To address this issue, we are creating a platform where users can both list their services and request services, helping local businesses improve their online visibility and attract more customers.
 
 ## Design Requirements
-The design requirements for our platform are structured around a series of Minimum Viable Products (MVPs). Each MVP phase builds upon the previous one, progressively adding more functionality and enhancing the user experience.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The design requirements for our platform are structured around a series of Minimum Viable Products (MVPs). Each MVP phase builds upon the previous one, progressively adding more functionality and enhancing the user experience.
 
 ### Functions
 
@@ -67,5 +68,7 @@ The design requirements for our platform are structured around a series of Minim
 - <b>Ethics:</b> The platform should adhere to ethical standards, ensuring fair treatment of all users, preventing discrimination, and avoiding misuse for fraudulent or harmful activities
 
 # Solution
+
+ToDo:
 
 Provide an account of some solutions your team brainstormed to implement the project. Some solutions might not have all the desired features, some might not satisfy the constraints, or both. These solutions come up in your mind while you brainstorm ways of implementing all the features while meeting the constraints. Towards, the end you select a solution that you think has all the features and satisfies all the constraints. Remember that an engineering design is iterative in nature!

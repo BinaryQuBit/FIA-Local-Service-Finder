@@ -10,8 +10,7 @@
     background-position: center center;
     background-repeat: no-repeat;
 }
-.header-title {
-    margin: 0;
-    font-size: 36px;
-    color: #8a5636;
+.header-logo {
+    width: 300px;
+    height: auto;
 }

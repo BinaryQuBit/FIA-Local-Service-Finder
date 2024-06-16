@@ -11,6 +11,7 @@ BACKEND_PID=$!
 
 # Navigate to frontend and start the frontend server
 cd ../frontend
+npm install
 npm start
 
 # Wait for the backend process to complete

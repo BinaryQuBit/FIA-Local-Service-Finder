@@ -1,13 +1,13 @@
-package com.example.backend;
+package com.FIA.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = "com.example.backend")
-@EntityScan(basePackages = "com.example.backend")
+@EnableJpaRepositories(basePackages = "com.FIA.backend")
+@EntityScan(basePackages = "com.FIA.backend")
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

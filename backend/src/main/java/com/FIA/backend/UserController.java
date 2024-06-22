@@ -1,4 +1,4 @@
-package com.example.backend;
+package com.FIA.backend;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

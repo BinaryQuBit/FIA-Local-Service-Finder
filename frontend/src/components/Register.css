@@ -13,6 +13,7 @@ body {
   position: relative;
   justify-content: center;
   text-align: center;
+  overflow: hidden;
 }
 
 h2 {
@@ -24,6 +25,7 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 input {
@@ -32,6 +34,7 @@ input {
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  width: 105%;
 }
 
 button {
@@ -77,4 +80,31 @@ button:hover {
   color: red;
   margin-bottom: 15px;
   text-align: center;
+}
+
+.name-fields, .location-fields {
+  display: flex;
+  justify-content: space-between;
+  justify-content: center;
+  gap: 10px;
+}
+
+.name-fields input,
+.location-fields input {
+  width: 35%;
+}
+
+.phone-fields {
+  width: 70%;
+  margin-bottom: 20px;
+}
+
+.emailAndPass {
+  justify-content: center;
+  align-items: center;
+  margin-left: -78px;
+}
+
+.emailAndPass input {
+  width: 122%;
 }

@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 import './Register.css';
 import Header from './Header';
 import Footer from './Footer';
 
 function Register() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [phone, setPhone] = useState('');
+  const [country, setCountry] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [postalCode, setPostalCode] = useState('');
   const [error, setError] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
@@ -15,7 +24,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    if (!email || !password || !confirmPassword) {
+    if (!firstName || !lastName || !email || !password || !confirmPassword || !phone || !country || !city || !state || !postalCode) {
       setError('All fields are required!');
       return;
     }
@@ -61,15 +70,30 @@ function Register() {
           </div>
         )}
         <form onSubmit={handleSubmit}>
-          <div>
+          
+          <div className="name-fields">
+            <input
+              type="text"
+              placeholder="First Name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Last Name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </div>
+          <div className="emailAndPass">
             <input
               type="email"
-              placeholder="Email address"
+              placeholder="Email Address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div>
+          <div className="emailAndPass">
             <input
               type="password"
               placeholder="Password"
@@ -77,12 +101,49 @@ function Register() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div>
+          <div className="emailAndPass">
             <input
               type="password"
               placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+
+          <div className="location-fields">
+            <input
+              type="country"
+              placeholder="Country"
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+            />
+            <input
+              type="city"
+              placeholder="City"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+          </div>
+          <div className="location-fields">
+            <input
+              type="state"
+              placeholder="State"
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+            />
+            <input
+              type="postalCode"
+              placeholder="Postal Code"
+              value={postalCode}
+              onChange={(e) => setPostalCode(e.target.value)}
+            />
+          </div>
+          <div className="phone-fields">
+            <PhoneInput
+              country={'ca'}
+              value={phone}
+              onChange={setPhone}
+              inputStyle={{ width: '100%' }}
             />
           </div>
           <button type="submit" className="submit-button">Register</button>

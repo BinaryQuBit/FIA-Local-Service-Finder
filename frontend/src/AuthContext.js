@@ -15,10 +15,6 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  useEffect(() => {
-    console.log('This is user:', user);
-  }, [user]);
-
   const login = (email) => {
     console.log('Logging in with email:', email);
     setUser({ email });

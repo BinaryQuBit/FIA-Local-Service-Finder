@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SignedInHeader from './SignedInHeader';
 import './PostServices.css';
+import { AuthContext } from "../AuthContext";
 
 function PostServices() {
+    const { user } = useContext(AuthContext);
     const [typeService, setTypeService] = useState('');
     const [description, setDescription] = useState('');
     const [emailService, setEmailService] = useState('');
@@ -22,8 +24,6 @@ function PostServices() {
             setError('All fields are required!');
             return;
         }
-        
-    
 
         try {
             const response = await fetch('http://localhost:8080/api/users/postservices', {
@@ -31,7 +31,16 @@ function PostServices() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ typeService, description, emailService, countryService, phoneService, cityService, provinceService }),
+                body: JSON.stringify({ 
+                    typeService,
+                    description,
+                    emailService,
+                    countryService,
+                    phoneService,
+                    cityService,
+                    provinceService,
+                    postedBy: user.email
+                 }),
             });
         
             if (response.ok) {

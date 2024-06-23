@@ -14,26 +14,29 @@ public class PostService {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
-    @Column(name = "typeservice")
+    @Column(name = "typeService")
     private String typeService;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "emailservice")
+    @Column(name = "emailService")
     private String emailService;
 
-    @Column(name = "phoneservice")
+    @Column(name = "phoneService")
     private String phoneService;
 
-    @Column(name = "cityservice")
+    @Column(name = "cityService")
     private String cityService;
 
-    @Column(name = "provinceservice")
+    @Column(name = "provinceService")
     private String provinceService;
 
-    @Column(name = "countryservice")
+    @Column(name = "countryService")
     private String countryService;
+
+    @Column(name = "postedBy")
+    private String postedBy;
 
     public Long getPostId() {
         return postId;
@@ -97,5 +100,13 @@ public class PostService {
 
     public void setCountryService(String countryService) {
         this.countryService = countryService;
+    }
+    
+    public String getPostedBy() {
+        return postedBy;
+    }
+
+    public void setPostedBy(String postedBy) {
+        this.postedBy = postedBy;
     }
 }

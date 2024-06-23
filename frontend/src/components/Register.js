@@ -4,7 +4,6 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import './Register.css';
 import Header from './Header';
-import Footer from './Footer';
 
 function Register() {
   const [firstName, setFirstName] = useState('');
@@ -150,7 +149,6 @@ function Register() {
         </form>
         <button onClick={() => navigate('/')} className="back-button">BACK</button>
       </div>
-      <Footer />
     </div>
   );
 }

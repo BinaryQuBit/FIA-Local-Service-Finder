@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Home.css';
 import Header from './Header';
-import Footer from './Footer';
 import { AuthContext } from '../AuthContext';
 
 function Home() {
@@ -24,8 +23,7 @@ function Home() {
     try {
       const response = await axios.post('http://localhost:8080/api/users/login', { email, password }, { withCredentials: true });
       if (response.status === 200) {
-        login(email);
-        navigate('/welcome');
+        navigate('/Profile', { state: { email } });
       }
     } catch (error) {
       setError('Invalid email or password');
@@ -131,7 +129,6 @@ function Home() {
           <img src="/how.png" alt="Join us" className="home-steps-image" />
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

@@ -1,0 +1,33 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header-left .logo {
+    height: 80px;
+  }
+  
+  .header-middle a, .header-right a {
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: larger;
+    color: #000;
+  }
+  
+  .header-middle a:hover, .header-right a:hover {
+    text-decoration: underline;
+  }
+  
+  .active-link {
+    background-color: #888e94;
+    padding: 20px;
+  }
+  
+  .content {
+    padding: 20px;
+  }
+  

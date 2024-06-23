@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Home.css';
 import Header from './Header';
-import Footer from './Footer';
 
 function Home() {
   const [email, setEmail] = useState('');
@@ -129,7 +128,6 @@ function Home() {
           <img src="/how.png" alt="Join us" className="home-steps-image" />
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

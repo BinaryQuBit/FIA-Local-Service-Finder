@@ -57,4 +57,14 @@ public class UserController {
 
         return ResponseEntity.ok(services);
     }
+
+    @PostMapping("/postservices")
+    public ResponseEntity<String> postService(@RequestBody PostService postservice) {
+        // if (Repository.existsById(user.getEmail())) {
+        //     return ResponseEntity.badRequest().body("Email already exists");
+        // }
+
+        postServiceRepository.save(postservice);
+        return ResponseEntity.ok("Posted Successfully");
+    }
 }

@@ -1,15 +1,19 @@
 package com.FIA.backend;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "postservice")
 public class PostService {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
@@ -37,6 +41,12 @@ public class PostService {
 
     @Column(name = "postedBy")
     private String postedBy;
+
+    @Column(name = "status")
+    private String status = "active";
+
+    @Column(name = "timestamp")
+    private LocalDateTime timestamp;
 
     public Long getPostId() {
         return postId;
@@ -101,7 +111,7 @@ public class PostService {
     public void setCountryService(String countryService) {
         this.countryService = countryService;
     }
-    
+
     public String getPostedBy() {
         return postedBy;
     }
@@ -109,4 +119,29 @@ public class PostService {
     public void setPostedBy(String postedBy) {
         this.postedBy = postedBy;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        timestamp = LocalDateTime.now();
+        if (status == null) {
+            status = "active";
+        }
+    }
 }
+

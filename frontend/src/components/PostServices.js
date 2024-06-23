@@ -4,12 +4,13 @@ import SignedInHeader from './SignedInHeader';
 import './PostServices.css';
 
 function PostServices() {
-    const [typeOfService, setTypeOfService] = useState('');
+    const [typeService, setTypeService] = useState('');
     const [description, setDescription] = useState('');
-    const [email, setEmail] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [country, setCountry] = useState('');
-    const [city, setCity] = useState('');
+    const [emailService, setEmailService] = useState('');
+    const [phoneService, setPhoneService] = useState('');
+    const [countryService, setCountryService] = useState('');
+    const [cityService, setCityService] = useState('');
+    const [provinceService, setProvinceService] = useState('');
     const [error, setError] = useState('');
     const [showAlert, setShowAlert] = useState(false);
     const navigate = useNavigate();
@@ -17,12 +18,11 @@ function PostServices() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        if (!typeOfService || !description || !email || !phoneNumber || !country || !city) {
+        if (!typeService || !description || !emailService || !phoneService || !countryService || !cityService || !provinceService) {
             setError('All fields are required!');
             return;
         }
         
-        // Submit the form data (add your form submission logic here)
     
 
         try {
@@ -31,7 +31,7 @@ function PostServices() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ typeOfService, description, email, country, phoneNumber, city }),
+                body: JSON.stringify({ typeService, description, emailService, countryService, phoneService, cityService, provinceService }),
             });
         
             if (response.ok) {
@@ -62,39 +62,41 @@ function PostServices() {
             <form onSubmit={handleSubmit} className="post-service-form">
                 <div className="form-group">
                     <label>Type of Services</label>
-                    <select value={typeOfService} onChange={(e) => setTypeOfService(e.target.value)}>
+                    <select value={typeService} onChange={(e) => setTypeService(e.target.value)}>
                     <option value="">Select a service</option>
-                    <option value="service1">Appliance Repair</option>
-                    <option value="service2">Carpentry</option>
-                    <option value="service3">Cleaning</option>
-                    <option value="service4">Electrician</option>
-                    <option value="service5">Flooring Installation</option>
-                    <option value="service6">Home Security Installation</option>
-                    <option value="service7">HVAC Repair</option>
-                    <option value="service8">Landscaping</option>
-                    <option value="service9">Painting</option>
-                    <option value="service10">Plumbing</option>
-                    <option value="service11">Roofing</option>
-                    <option value="service12">Window Cleaning</option>
-                    <option value="service13">Others (Specify in the description)</option>
+                    <option value="Appliance Repair">Appliance Repair</option>
+                    <option value="Carpentry">Carpentry</option>
+                    <option value="Cleaning">Cleaning</option>
+                    <option value="Electrician">Electrician</option>
+                    <option value="Flooring Installation">Flooring Installation</option>
+                    <option value="Home Security Installation">Home Security Installation</option>
+                    <option value="HVAC Repair">HVAC Repair</option>
+                    <option value="Landscaping">Landscaping</option>
+                    <option value="Painting">Painting</option>
+                    <option value="Plumbing">Plumbing</option>
+                    <option value="Roofing">Roofing</option>
+                    <option value="Window Cleaning">Window Cleaning</option>
+                    <option value="Others">Others (Specify in the description)</option>
                     </select>
                 </div>
                 <div className="form-group">
-                    <label>Description</label>
+                    <label>description</label>
                     <textarea placeholder="Type Here..." value={description} onChange={(e) => setDescription(e.target.value)} />
                 </div>
-                
                 <div className="form-group">
-                    <input type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} />
+                    <input type="text" placeholder="City" value={cityService} onChange={(e) => setCityService(e.target.value)} />
                 </div>
                 <div className="form-group">
-                    <input type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
+                    <input type="text" placeholder="Province" value={provinceService} onChange={(e) => setProvinceService(e.target.value)} />
                 </div>
                 <div className="form-group">
-                    <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <input type="text" placeholder="Country" value={countryService} onChange={(e) => setCountryService(e.target.value)} />
                 </div>
                 <div className="form-group">
-                    <input type="text" placeholder="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+                    <input type="email" placeholder="Email" value={emailService} onChange={(e) => setEmailService(e.target.value)} />
+                </div>
+                <div className="form-group">
+                    <input type="text" placeholder="Phone Number" value={phoneService} onChange={(e) => setPhoneService(e.target.value)} />
                 </div>
                 {error && <div className="error-message">{error}</div>}
                 <button type="submit" className="submit-button">Post Service</button>

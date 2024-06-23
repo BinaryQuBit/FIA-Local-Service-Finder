@@ -1,14 +1,39 @@
-import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../AuthContext';
 import './Welcome.css';
 
 function Welcome() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { email } = location.state || {};
+  const { user, logout } = useContext(AuthContext);
+  const [email, setEmail] = useState(user?.email || sessionStorage.getItem('userEmail'));
 
-  const handleLogout = () => {
-    navigate('/');
+  useEffect(() => {
+    if (!email) {
+      navigate('/');
+    }
+  }, [email, navigate]);
+
+  useEffect(() => {
+    console.log('Email in state:', email);
+  }, [email]);
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/users/logout', {
+        method: 'POST',
+        credentials: 'include'
+      });
+      
+      if (response.ok) {
+        logout();
+        navigate('/');
+      } else {
+        console.error('Failed to logout');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (

@@ -16,7 +16,7 @@ public class User {
     private String city;
     private String province;
     private String country;
-
+    private String postalcode;
 
     public String getEmail() {
         return email;
@@ -80,5 +80,13 @@ public class User {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getPostalCode() {
+        return postalcode;
+    }
+
+    public void setPostalCode(String postalcode) {
+        this.postalcode = postalcode;
     }
 }

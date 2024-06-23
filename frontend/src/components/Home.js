@@ -1,14 +1,16 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Home.css';
 import Header from './Header';
+import { AuthContext } from '../AuthContext';
 
 function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,9 +21,10 @@ function Home() {
     }
 
     try {
-      const response = await axios.post('http://localhost:8080/api/users/login', { email, password });
+      const response = await axios.post('http://localhost:8080/api/users/login', { email, password }, { withCredentials: true });
       if (response.status === 200) {
-        navigate('/Profile', { state: { email } });
+        login(email);
+        navigate('/Profile');
       }
     } catch (error) {
       setError('Invalid email or password');
@@ -50,7 +53,6 @@ function Home() {
       });
     };
   }, []);
-  
 
   return (
     <div className="home-container">

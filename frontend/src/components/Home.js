@@ -21,7 +21,7 @@ function Home() {
     try {
       const response = await axios.post('http://localhost:8080/api/users/login', { email, password });
       if (response.status === 200) {
-        navigate('/welcome', { state: { email } });
+        navigate('/Profile', { state: { email } });
       }
     } catch (error) {
       setError('Invalid email or password');

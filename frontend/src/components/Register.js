@@ -12,10 +12,10 @@ function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [phone, setPhone] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
-  const [state, setState] = useState('');
+  const [province, setProvince] = useState('');
   const [postalCode, setPostalCode] = useState('');
   const [error, setError] = useState('');
   const [showAlert, setShowAlert] = useState(false);
@@ -24,7 +24,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    if (!firstName || !lastName || !email || !password || !confirmPassword || !phone || !country || !city || !state || !postalCode) {
+    if (!firstName || !lastName || !email || !password || !confirmPassword || !phoneNumber || !country || !city || !province || !postalCode) {
       setError('All fields are required!');
       return;
     }
@@ -40,7 +40,7 @@ function Register() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, phoneNumber, country, firstName, lastName, city, province, postalCode }),
       });
   
       if (response.ok) {
@@ -126,10 +126,10 @@ function Register() {
           </div>
           <div className="location-fields">
             <input
-              type="state"
-              placeholder="State"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
+              type="province"
+              placeholder="province"
+              value={province}
+              onChange={(e) => setProvince(e.target.value)}
             />
             <input
               type="postalCode"
@@ -141,8 +141,8 @@ function Register() {
           <div className="phone-fields">
             <PhoneInput
               country={'ca'}
-              value={phone}
-              onChange={setPhone}
+              value={phoneNumber}
+              onChange={setPhoneNumber}
               inputStyle={{ width: '100%' }}
             />
           </div>

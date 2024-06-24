@@ -38,15 +38,22 @@ function SignedInHeader() {
         setShowModal(false);
       }
     };
-
+  
+    const handleScroll = () => {
+      setShowModal(false); // Close modal on scroll
+    };
+  
     if (showModal) {
       document.addEventListener('mousedown', handleOutsideClick);
+      window.addEventListener('scroll', handleScroll);
     } else {
       document.removeEventListener('mousedown', handleOutsideClick);
+      window.removeEventListener('scroll', handleScroll);
     }
-
+  
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [showModal]);
 
@@ -71,7 +78,7 @@ function SignedInHeader() {
         <div className="initials-circle" onClick={toggleModal}>
           {initials}
         </div>
-        <div className={`modal ${showModal ? 'slide-in' : ''}` } ref={modalRef}>
+        <div className={`modalCustom ${showModal ? 'slide-in' : ''}` } ref={modalRef}>
           <div className="modal-content">
             <NavLink to="/profile" onClick={toggleModal} className={({ isActive }) => (isActive ? 'active-link-modal' : '')}>Profile</NavLink>
             <NavLink to="/account-settings" onClick={toggleModal} className={({ isActive }) => (isActive ? 'active-link-modal' : '')}>Account Settings</NavLink>

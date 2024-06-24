@@ -81,4 +81,19 @@ public class UserController {
         postServiceRepository.save(postservice);
         return ResponseEntity.ok("Posted Successfully");
     }
+
+    @GetMapping("/userinfo")
+    public ResponseEntity<?> getUserInfo(HttpSession session) {
+        String email = (String) session.getAttribute("userEmail");
+        if (email == null) {
+            return ResponseEntity.status(401).body("User is not logged in");
+        }
+
+        User user = userRepository.findById(email).orElse(null);
+        if (user == null) {
+            return ResponseEntity.status(404).body("User not found");
+        }
+
+        return ResponseEntity.ok(user);
+    }
 }

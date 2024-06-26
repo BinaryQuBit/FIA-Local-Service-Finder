@@ -142,7 +142,7 @@ function Register() {
               country={'ca'}
               value={phoneNumber}
               onChange={setPhoneNumber}
-              inputStyle={{ width: '100%' }}
+              inputStyle={{ width: '80%' }}
             />
           </div>
           <button type="submit" className="submit-button">Register</button>

@@ -90,7 +90,7 @@ function Home() {
                 <button type="submit" className="home-button">Log in</button>
                 </div>
                 <div className="home-links">
-                <Link to="#" className="forgot-link">Forgotten password?</Link>
+                <Link to="/forgotPassword" className="forgot-link">Forgotten password?</Link>
                 </div>
                 <div className="register-button">
                 <Link to="/register" className="home-register-button">Create new account</Link>

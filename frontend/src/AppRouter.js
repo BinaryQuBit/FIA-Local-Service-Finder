@@ -9,6 +9,7 @@ import ExploreServices from "./components/ExploreServices";
 import PostServices from "./components/PostServices";
 import Profile from "./components/Profile";
 import Footer from "./components/Footer";
+import ForgotPassword from "./components/ForgotPassword";
 import "./AppRouter.css";
 
 function AppRouter() {
@@ -20,6 +21,7 @@ function AppRouter() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/forgotPassword" element={<ForgotPassword />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="/account-settings" element={<AccountSettings />} />
                 <Route path="/explore-services" element={<ExploreServices />} />

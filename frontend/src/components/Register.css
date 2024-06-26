@@ -4,7 +4,7 @@ body {
 }
 
 .register-container {
-  max-width: 400px;
+  max-width: 450px;
   margin: 50px auto;
   padding: 20px;
   background-color: #fff;
@@ -13,19 +13,14 @@ body {
   position: relative;
   justify-content: center;
   text-align: center;
+  align-items: center;
   overflow: hidden;
 }
 
-h2 {
+.register-container h2 {
   text-align: center;
-  color: #333;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  color: #252525;
+  margin-bottom: 10px;
 }
 
 input {
@@ -37,6 +32,35 @@ input {
   width: 105%;
 }
 
+.name-fields, .location-fields {
+  display: flex;
+  justify-content: space-between;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.name-fields input,
+.location-fields input {
+  width: 42%;
+}
+
+.phone-fields {
+  margin-left: 66px;
+  margin-bottom: 20px;
+}
+
+.emailAndPass {
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.emailAndPass input {
+  width: 86%;
+}
+
 button {
   padding: 10px;
   margin-top: 10px;
@@ -45,6 +69,7 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  width: 20%;
 }
 
 button:hover {
@@ -52,7 +77,8 @@ button:hover {
 }
 
 .submit-button {
-  width: 50%;
+  max-width: 75%;
+  margin-bottom: 10px;
 }
 
 .back-button {
@@ -80,31 +106,4 @@ button:hover {
   color: red;
   margin-bottom: 15px;
   text-align: center;
-}
-
-.name-fields, .location-fields {
-  display: flex;
-  justify-content: space-between;
-  justify-content: center;
-  gap: 10px;
-}
-
-.name-fields input,
-.location-fields input {
-  width: 35%;
-}
-
-.phone-fields {
-  width: 70%;
-  margin-bottom: 20px;
-}
-
-.emailAndPass {
-  justify-content: center;
-  align-items: center;
-  margin-left: -78px;
-}
-
-.emailAndPass input {
-  width: 122%;
 }

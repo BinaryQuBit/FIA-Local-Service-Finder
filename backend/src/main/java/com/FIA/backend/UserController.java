@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpSession;
 
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -41,6 +42,19 @@ public class UserController {
 
         userRepository.save(user);
         return ResponseEntity.ok("User registered successfully");
+    }
+
+    @PostMapping("/resetPassword")
+    public ResponseEntity<String> resetPassword(@RequestBody User user) {
+        if (!userRepository.existsById(user.getEmail())) {
+            return ResponseEntity.badRequest().body("Email does not exist");
+        }
+
+        // Logic for sending reset password link (to be implemented)
+        // For now, let's assume a simple response
+        String resetMessage = "Check your email for reset password link";
+
+        return ResponseEntity.ok(resetMessage);
     }
 
     @PostMapping("/login")

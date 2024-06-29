@@ -11,6 +11,7 @@ import Profile from "./components/Profile";
 import Footer from "./components/Footer";
 import ForgotPassword from "./components/ForgotPassword";
 import "./AppRouter.css";
+import ResetPassword from './components/ResetPassword';
 
 function AppRouter() {
   return (
@@ -22,6 +23,7 @@ function AppRouter() {
               <Route path="/" element={<Home />} />
               <Route path="/register" element={<Register />} />
               <Route path="/forgotPassword" element={<ForgotPassword />} />
+              <Route path="/resetPassword" element={<ResetPassword />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="/account-settings" element={<AccountSettings />} />
                 <Route path="/explore-services" element={<ExploreServices />} />

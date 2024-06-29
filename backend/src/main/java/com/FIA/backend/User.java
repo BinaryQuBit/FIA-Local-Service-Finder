@@ -1,5 +1,6 @@
 package com.FIA.backend;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -17,6 +18,9 @@ public class User {
     private String province;
     private String country;
     private String postalcode;
+
+    @Column(name = "reset_token")
+    private String resetToken;
 
     public String getEmail() {
         return email;
@@ -88,5 +92,13 @@ public class User {
 
     public void setPostalCode(String postalcode) {
         this.postalcode = postalcode;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
     }
 }

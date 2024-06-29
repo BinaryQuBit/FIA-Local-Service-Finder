@@ -1,6 +1,8 @@
 package com.FIA.backend;
 
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpSession;
 
-
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -28,6 +29,9 @@ public class UserController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private EmailService emailService;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -50,12 +54,41 @@ public class UserController {
             return ResponseEntity.badRequest().body("Email does not exist");
         }
 
-        // Logic for sending reset password link (to be implemented)
-        // For now, let's assume a simple response
-        String resetMessage = "Check your email for reset password link";
+        // Generate reset token
+        String token = UUID.randomUUID().toString();
+        User existingUser = userRepository.findById(user.getEmail()).orElse(null);
+        if (existingUser != null) {
+            existingUser.setResetToken(token);
+            userRepository.save(existingUser);
 
-        return ResponseEntity.ok(resetMessage);
+            String resetLink = "http://localhost:3000/ResetPassword?token=" + token + "&email=" + user.getEmail();
+            emailService.sendResetPasswordEmail(user.getEmail(), resetLink);
+
+            return ResponseEntity.ok("Check your email for reset password link");
+        }
+
+        return ResponseEntity.badRequest().body("Email does not exist");
     }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetUserPassword(@RequestBody Map<String, String> payload) {
+        String email = payload.get("email");
+        String newPassword = payload.get("newPassword");
+        String token = payload.get("token");
+
+        User user = userRepository.findById(email).orElse(null);
+        if (user == null || !token.equals(user.getResetToken())) {
+            return ResponseEntity.badRequest().body("Invalid email or token");
+        }
+
+        // Hash the new password before saving
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setResetToken(null); // Clear the token after reset
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Password has been reset successfully");
+    }
+
 
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody User user, HttpSession session) {

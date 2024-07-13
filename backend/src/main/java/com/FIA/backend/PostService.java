@@ -43,7 +43,7 @@ public class PostService {
     private String postedBy;
 
     @Column(name = "status")
-    private String status = "active";
+    private String status = "Active";
 
     @Column(name = "timestamp")
     private LocalDateTime timestamp;
@@ -140,7 +140,7 @@ public class PostService {
     protected void onCreate() {
         timestamp = LocalDateTime.now();
         if (status == null) {
-            status = "active";
+            status = "Active";
         }
     }
 }

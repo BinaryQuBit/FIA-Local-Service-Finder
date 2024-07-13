@@ -1,16 +1,22 @@
 package com.FIA.backend;
 
 import java.util.List;
+
+import java.util.Optional;
 import java.util.Map;
 import java.util.UUID;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -127,6 +133,30 @@ public class UserController {
     public ResponseEntity<String> postService(@RequestBody PostService postservice) {
         postServiceRepository.save(postservice);
         return ResponseEntity.ok("Posted Successfully");
+    }
+
+    @PutMapping("/postservices/{id}")
+    public ResponseEntity<String> updatePostStatus(@PathVariable Long id, @RequestBody String status) {
+        Optional<PostService> optionalPostService = postServiceRepository.findById(id);
+        if (!optionalPostService.isPresent()) {
+            return ResponseEntity.status(404).body("Post not found");
+        }
+    
+        PostService postService = optionalPostService.get();
+        postService.setStatus(status); // Directly set the status as a string
+        postServiceRepository.save(postService);
+    
+        return ResponseEntity.ok("Status updated successfully");
+    }    
+
+    @DeleteMapping("/postservices/{id}")
+    public ResponseEntity<String> deletePostService(@PathVariable Long id) {
+        if (!postServiceRepository.existsById(id)) {
+            return ResponseEntity.status(404).body("Post not found");
+        }
+
+        postServiceRepository.deleteById(id);
+        return ResponseEntity.ok("Post deleted successfully");
     }
 
     @GetMapping("/userinfo")

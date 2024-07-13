@@ -20,7 +20,7 @@ function ExploreServices() {
         if (typeof data === 'string') {
           setMessage(data);
         } else {
-          setPosts(data.filter(post => post.status === 'active'));
+          setPosts(data.filter(post => post.status === 'Active'));
         }
       } catch (error) {
         console.error('Error fetching posts:', error);

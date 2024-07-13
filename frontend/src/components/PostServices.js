@@ -73,7 +73,7 @@ function PostServices() {
     <div>
       <SignedInHeader />
       <div className="post-service-container">
-        <h2>Post Service</h2>
+        <h1>Post Service</h1>
         {showAlert && (
           <div className="custom-alert">Your post is successfully created!</div>
         )}

@@ -48,9 +48,9 @@ public class PostService {
     @Column(name = "timestamp")
     private LocalDateTime timestamp;
 
-    PostService(String service_1, String description_1) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+    // PostService(String service_1, String description_1) {
+    //     throw new UnsupportedOperationException("Not supported yet.");
+    // }
 
     public Long getPostId() {
         return postId;

@@ -1,11 +1,9 @@
 package com.FIA.backend;
 
 import java.util.List;
-
-import java.util.Optional;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -147,7 +145,7 @@ public class UserController {
         postServiceRepository.save(postService);
     
         return ResponseEntity.ok("Status updated successfully");
-    }    
+    }
 
     @DeleteMapping("/postservices/{id}")
     public ResponseEntity<String> deletePostService(@PathVariable Long id) {

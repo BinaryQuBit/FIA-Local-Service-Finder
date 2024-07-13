@@ -138,7 +138,7 @@ public class UserController {
     @PutMapping("/postservices/{id}")
     public ResponseEntity<String> updatePostStatus(@PathVariable Long id, @RequestBody String status) {
         Optional<PostService> optionalPostService = postServiceRepository.findById(id);
-        if (!optionalPostService.isPresent()) {
+        if (optionalPostService.isEmpty()) {
             return ResponseEntity.status(404).body("Post not found");
         }
     

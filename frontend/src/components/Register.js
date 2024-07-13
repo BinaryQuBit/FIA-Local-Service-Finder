@@ -47,7 +47,7 @@ function Register() {
         setTimeout(() => {
           setShowAlert(false);
           navigate('/');
-        }, 2000);
+        }, 2500);
       } else {
         const result = await response.text();
         setError(result);

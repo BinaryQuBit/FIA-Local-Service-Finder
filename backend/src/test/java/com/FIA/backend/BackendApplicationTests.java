@@ -339,18 +339,54 @@ class BackendApplicationTests {
     }
 
     @Test
-    public void testLoginUser() {
-        HttpSession session = new MockHttpSession();
+    public void testValidLogin() throws Exception {
+        User validUser = new User();
+        validUser.setEmail("valid.email0@example.com");
+        validUser.setPassword("validPassword123");
 
-        // Mock the userRepository and passwordEncoder
-        when(userRepository.findById(anyString())).thenReturn(Optional.of(user));
-        when(passwordEncoder.matches(anyString(), anyString())).thenReturn(true);
+        // Register the user first
+        when(userRepository.existsById(validUser.getEmail())).thenReturn(false);
+        when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
+        when(userRepository.save(validUser)).thenReturn(validUser);
 
-        ResponseEntity<String> response = userController.loginUser(user, session);
+        mockMvc.perform(post("/api/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(validUser)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("User registered successfully"));
 
-        assertEquals("Login successful", response.getBody());
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(user.getEmail(), session.getAttribute("userEmail"));
+        // Simulate the user already existing in the repository with the encoded password
+        when(userRepository.findById(validUser.getEmail())).thenReturn(Optional.of(validUser));
+        when(passwordEncoder.matches("validPassword123", "encodedPassword")).thenReturn(true);
+
+        // Attempt to log in with the correct credentials
+        mockMvc.perform(post("/api/users/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(validUser)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Login successful"));
+
+        // Clean up
+        mockMvc.perform(delete("/api/users/delete/" + validUser.getEmail())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testInvalidLogin() throws Exception {
+        User invalidUser = new User();
+        invalidUser.setEmail("email0@example.com");
+        invalidUser.setPassword("invalidPassword123");
+
+        // Simulate the user not existing in the repository
+        when(userRepository.findById(invalidUser.getEmail())).thenReturn(Optional.empty());
+
+        // Attempt to log
+        mockMvc.perform(post("/api/users/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(invalidUser)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Invalid email or password"));
     }
 
     @Test

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpSession;
+// import main.java.com.FIA.backend.EmailService;
 
 @RestController
 @RequestMapping("/api/users")
@@ -41,8 +44,26 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
+        // Email  validation
+        String emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(user.getEmail());
+
+        if (!matcher.matches()) {
+            return ResponseEntity.badRequest().body("Invalid email format");
+        }
+
+        // Password validation
+        String passwordRegex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
+        Pattern passwordPattern = Pattern.compile(passwordRegex);
+        Matcher passwordMatcher = passwordPattern.matcher(user.getPassword());
+
+        if (!passwordMatcher.matches()) {
+            return ResponseEntity.badRequest().body("Password must be at least 8 characters long and contain a mix of letters and numbers");
+        }
+
         if (userRepository.existsById(user.getEmail())) {
-            return ResponseEntity.badRequest().body("Email already exists");
+            return ResponseEntity.badRequest().body("Email already exists!");
         }
 
         // Hash the password before saving the user
@@ -50,6 +71,16 @@ public class UserController {
 
         userRepository.save(user);
         return ResponseEntity.ok("User registered successfully");
+    }
+
+    @DeleteMapping("/delete/{email}")
+    public ResponseEntity<String> deleteUser(@PathVariable String email) {
+        if (!userRepository.existsById(email)) {
+            return ResponseEntity.status(404).body("User not found");
+        }
+
+        userRepository.deleteById(email);
+        return ResponseEntity.ok("User deleted successfully");
     }
 
     @PostMapping("/resetPassword")

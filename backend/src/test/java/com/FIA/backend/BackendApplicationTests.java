@@ -12,16 +12,33 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpSession;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 class BackendApplicationTests {
-    
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Mock
     private UserRepository userRepository;
 
@@ -45,10 +62,71 @@ class BackendApplicationTests {
     }
 
     @Test
-    public void testEmail() {
-        String email = "test@example.com";
-        user.setEmail(email);
-        assertEquals(email, user.getEmail());
+    public void whenValidInput_thenReturns200() throws Exception {
+        User validUser = new User();
+        validUser.setEmail("valid.email11@example.com");
+        validUser.setPassword("validPassword123");
+
+        when(userRepository.existsById(validUser.getEmail())).thenReturn(false);
+        when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
+
+        mockMvc.perform(post("/api/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(validUser)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("User registered successfully"));
+
+        // Delete the user after test
+        mockMvc.perform(delete("/api/users/delete/" + validUser.getEmail())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void whenInvalidEmail_thenReturns400() throws Exception {
+        User invalidUser = new User();
+        invalidUser.setEmail("invalid-email");
+        invalidUser.setPassword("validPassword123");
+
+        mockMvc.perform(post("/api/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(invalidUser)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Invalid email format"));
+    }
+
+    @Test
+    public void whenInvalidPassword_thenReturns400() throws Exception {
+        User invalidPasswordUser = new User();
+        invalidPasswordUser.setEmail("valid99@example.com");
+        invalidPasswordUser.setPassword("short");
+
+        mockMvc.perform(post("/api/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(invalidPasswordUser)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Password must be at least 8 characters long and contain a mix of letters and numbers"));
+    }
+    
+    @Test
+    public void whenValidPassword_thenReturns200() throws Exception {
+        User validPasswordUser = new User();
+        validPasswordUser.setEmail("valid101@example.com");
+        validPasswordUser.setPassword("validPassword123");
+
+        when(userRepository.existsById(validPasswordUser.getEmail())).thenReturn(false);
+        when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
+
+        mockMvc.perform(post("/api/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(validPasswordUser)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("User registered successfully"));
+
+        // Delete the user after test
+        mockMvc.perform(delete("/api/users/delete/" + validPasswordUser.getEmail())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -78,22 +156,6 @@ class BackendApplicationTests {
         //assertEquals(null, session.getAttribute("userEmail")); // Session is invalidated
     }
 
-    // @Test
-    // public void testInvalidEmailFormat() {
-    //     Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-    //         user.setEmail("invalid-email");
-    //     });
-    //     assertEquals("Invalid email format", exception.getMessage());
-    // }
-
-    // @Test
-    // public void testInvalidPassword() {
-    //     Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-    //         user.setPassword("123"); // Password too short
-    //     });
-    //     assertEquals("Invalid password format", exception.getMessage());
-    // }
-
     @Test
     public void testValidEmailFormat() {
         String email = "valid@example.com";
@@ -121,6 +183,22 @@ class BackendApplicationTests {
     }
 
     // @Test
+    // public void testInvalidEmailFormat() {
+    //     Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+    //         user.setEmail("invalid-email");
+    //     });
+    //     assertEquals("Invalid email format", exception.getMessage());
+    // }
+
+    // @Test
+    // public void testInvalidPassword() {
+    //     Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+    //         user.setPassword("123"); // Password too short
+    //     });
+    //     assertEquals("Invalid password format", exception.getMessage());
+    // }
+
+    // @Test
     // public void testGetAllServices_ServicesFound() {
     //     // Create a list of services to be returned by the mock
     //     PostService service1 = new PostService("Service 1", "Description 1");
@@ -136,5 +214,4 @@ class BackendApplicationTests {
     //     assertFalse(((List<PostService>) response.getBody()).isEmpty());
     //     assertEquals(2, ((List<PostService>) response.getBody()).size());
     // }
-    
 }

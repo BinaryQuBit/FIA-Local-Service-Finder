@@ -1,6 +1,7 @@
 package com.FIA.backend;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -232,6 +233,104 @@ class BackendApplicationTests {
                 .content(objectMapper.writeValueAsString(existingUser)))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Check your email for reset password link"));
+
+        // Clean up
+        mockMvc.perform(delete("/api/users/delete/" + existingUser.getEmail())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testResetPasswordWithInvalidEmail() throws Exception {
+        Map<String, String> payload;
+        payload = Map.of(
+                "email", "nonexistingemail@example.com",
+                "newPassword", "newValidPassword123",
+                "token", "validToken"
+        );
+
+        mockMvc.perform(post("/api/users/reset-password")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(payload)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Invalid email or token"));
+    }
+
+    @Test
+    public void testResetPasswordWithInvalidToken() throws Exception {
+        User existingUser = new User();
+        existingUser.setEmail("existedemail@example.com");
+        existingUser.setPassword("existingPassword123");
+        existingUser.setResetToken("validToken");
+
+        // Register the user first
+        when(userRepository.existsById(existingUser.getEmail())).thenReturn(false);
+        when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
+        when(userRepository.save(existingUser)).thenReturn(existingUser);
+
+        mockMvc.perform(post("/api/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(existingUser)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("User registered successfully"));
+
+        // Simulate the user already existing in the repository
+        when(userRepository.existsById(existingUser.getEmail())).thenReturn(true);
+        when(userRepository.findById(existingUser.getEmail())).thenReturn(Optional.of(existingUser));
+
+        // Attempt to reset the password with an invalid token
+        Map<String, String> payload = Map.of(
+            "email", existingUser.getEmail(),
+            "newPassword", "newValidPassword123",
+            "token", "invalidToken"
+        );
+
+        mockMvc.perform(post("/api/users/reset-password")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(payload)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Invalid email or token"));
+
+        // Clean up
+        mockMvc.perform(delete("/api/users/delete/" + existingUser.getEmail())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testValidResetPassword() throws Exception {
+        User existingUser = new User();
+        existingUser.setEmail("existingemail0@example.com");
+        existingUser.setPassword("existingPassword123");
+        existingUser.setResetToken("validToken");
+
+        // Register the user first
+        when(userRepository.existsById(existingUser.getEmail())).thenReturn(false);
+        when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
+        when(userRepository.save(existingUser)).thenReturn(existingUser);
+
+        mockMvc.perform(post("/api/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(existingUser)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("User registered successfully"));
+
+        // Simulate the user already existing in the repository
+        when(userRepository.existsById(existingUser.getEmail())).thenReturn(true);
+        when(userRepository.findById(existingUser.getEmail())).thenReturn(Optional.of(existingUser));
+
+        // Attempt to reset the password with a valid token
+        Map<String, String> payload = Map.of(
+            "email", existingUser.getEmail(),
+            "newPassword", "newValidPassword123",
+            "token", "validToken"
+        );
+
+        mockMvc.perform(post("/api/users/reset-password")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(payload)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Password has been reset successfully"));
 
         // Clean up
         mockMvc.perform(delete("/api/users/delete/" + existingUser.getEmail())

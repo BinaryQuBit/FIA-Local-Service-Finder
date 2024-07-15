@@ -195,6 +195,51 @@ class BackendApplicationTests {
     }
 
     @Test
+    public void testRequestingResetPassForNonExistingEmail() throws Exception {
+        User nonExistingUser = new User();
+        nonExistingUser.setEmail("non.existing.email@example.com");
+
+        mockMvc.perform(post("/api/users/resetPassword")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(nonExistingUser)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Email does not exist"));
+    }
+
+    @Test
+    public void testRequestingResetPassForExistingEmail() throws Exception {
+        User existingUser = new User();
+        existingUser.setEmail("existing.emailforresetpass@example.com");
+        existingUser.setPassword("existingPassword123");
+
+        // Register the user first
+        when(userRepository.existsById(existingUser.getEmail())).thenReturn(false);
+        when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
+        when(userRepository.save(existingUser)).thenReturn(existingUser);
+
+        mockMvc.perform(post("/api/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(existingUser)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("User registered successfully"));
+
+        // Now request a password reset for the user
+        when(userRepository.existsById(existingUser.getEmail())).thenReturn(true);
+        when(userRepository.findById(existingUser.getEmail())).thenReturn(Optional.of(existingUser));
+
+        mockMvc.perform(post("/api/users/resetPassword")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(existingUser)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Check your email for reset password link"));
+
+        // Clean up
+        mockMvc.perform(delete("/api/users/delete/" + existingUser.getEmail())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
     public void testLoginUser() {
         HttpSession session = new MockHttpSession();
 

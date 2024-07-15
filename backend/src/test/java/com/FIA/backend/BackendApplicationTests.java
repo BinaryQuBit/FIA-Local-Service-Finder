@@ -62,7 +62,7 @@ class BackendApplicationTests {
     }
 
     @Test
-    public void whenValidInput_thenReturns200() throws Exception {
+    public void testValidUser() throws Exception {
         User validUser = new User();
         validUser.setEmail("valid.email11@example.com");
         validUser.setPassword("validPassword123");
@@ -83,7 +83,7 @@ class BackendApplicationTests {
     }
 
     @Test
-    public void whenInvalidEmail_thenReturns400() throws Exception {
+    public void testInvalidEmail() throws Exception {
         User invalidUser = new User();
         invalidUser.setEmail("invalid-email");
         invalidUser.setPassword("validPassword123");
@@ -96,7 +96,7 @@ class BackendApplicationTests {
     }
 
     @Test
-    public void whenInvalidPassword_thenReturns400() throws Exception {
+    public void testInvalidPassword() throws Exception {
         User invalidPasswordUser = new User();
         invalidPasswordUser.setEmail("valid99@example.com");
         invalidPasswordUser.setPassword("short");
@@ -109,7 +109,7 @@ class BackendApplicationTests {
     }
     
     @Test
-    public void whenValidPassword_thenReturns200() throws Exception {
+    public void testValidPassword() throws Exception {
         User validPasswordUser = new User();
         validPasswordUser.setEmail("valid101@example.com");
         validPasswordUser.setPassword("validPassword123");
@@ -127,6 +127,71 @@ class BackendApplicationTests {
         mockMvc.perform(delete("/api/users/delete/" + validPasswordUser.getEmail())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testAddingExistedEmail() throws Exception {
+        User existingUser = new User();
+        existingUser.setEmail("existing.email1@example.com");
+        existingUser.setPassword("existingPassword123");
+
+        // Register the user first
+        when(userRepository.existsById(existingUser.getEmail())).thenReturn(false);
+        when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
+
+        mockMvc.perform(post("/api/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(existingUser)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("User registered successfully"));
+
+        // Simulate the user already existing in the repository
+        when(userRepository.existsById(existingUser.getEmail())).thenReturn(true);
+
+        // Attempt to register the same user again
+        mockMvc.perform(post("/api/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(existingUser)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Email already exists!"));
+
+        // Clean up
+        mockMvc.perform(delete("/api/users/delete/" + existingUser.getEmail())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testDeleteNonExistingEmail() throws Exception {
+        String nonExistingEmail = "non.existing.email@example.com";
+
+        mockMvc.perform(delete("/api/users/delete/" + nonExistingEmail)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string("User not found"));
+    }
+
+    @Test
+    public void testDeleteExistedEmail() throws Exception {
+        User userToDelete = new User();
+        userToDelete.setEmail("user.to.delete@example.com");
+        userToDelete.setPassword("deletePassword123");
+
+        // Register the user first
+        when(userRepository.existsById(userToDelete.getEmail())).thenReturn(false);
+        when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
+
+        mockMvc.perform(post("/api/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(userToDelete)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("User registered successfully"));
+
+        // Now delete the user
+        mockMvc.perform(delete("/api/users/delete/" + userToDelete.getEmail())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string("User deleted successfully"));
     }
 
     @Test
@@ -154,20 +219,6 @@ class BackendApplicationTests {
         assertEquals("Logout successful", response.getBody());
         assertEquals(200, response.getStatusCodeValue());
         //assertEquals(null, session.getAttribute("userEmail")); // Session is invalidated
-    }
-
-    @Test
-    public void testValidEmailFormat() {
-        String email = "valid@example.com";
-        user.setEmail(email);
-        assertEquals(email, user.getEmail());
-    }
-
-    @Test
-    public void testValidPassword() {
-        String password = "validPassword123";
-        user.setPassword(password);
-        assertEquals(password, user.getPassword());
     }
 
     @Test

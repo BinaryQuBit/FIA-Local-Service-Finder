@@ -10,6 +10,8 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -54,12 +56,24 @@ public class UserController {
         }
 
         // Password validation
-        String passwordRegex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
+        String passwordRegex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&-])[A-Za-z\\d@$!%*?&-]{8,}$";
         Pattern passwordPattern = Pattern.compile(passwordRegex);
         Matcher passwordMatcher = passwordPattern.matcher(user.getPassword());
 
         if (!passwordMatcher.matches()) {
-            return ResponseEntity.badRequest().body("Password must be at least 8 characters long and contain a mix of letters and numbers");
+            HttpHeaders headers;
+            headers = new HttpHeaders();
+            headers.add("Content-Type", "text/html; charset=UTF-8");
+            return new ResponseEntity<>(
+                "Password is invalid. Valid password must contain:<br>" +
+                "At least one uppercase letter<br>" +
+                "At least one lowercase letter<br>" +
+                "At least one digit<br>" +
+                "At least one special character: @, $, !, %, *, ?, &, -<br>" +
+                "Minimum length of 8 characters",
+                headers,
+                HttpStatus.BAD_REQUEST
+            );
         }
 
         if (userRepository.existsById(user.getEmail())) {

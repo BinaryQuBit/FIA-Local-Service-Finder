@@ -35,5 +35,3 @@ build/
 ### Server Information
 application.properties
 
-# Ignore the backend_pid file
-backend_pid

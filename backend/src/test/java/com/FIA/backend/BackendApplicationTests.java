@@ -1,35 +1,31 @@
 package com.FIA.backend;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.anyString;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import jakarta.servlet.http.HttpSession;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -346,37 +342,43 @@ class BackendApplicationTests {
         }
 
         @Test
-        public void testValidLogin() throws Exception {
-                User validUser = new User();
-                validUser.setEmail("valid.email0@example.com");
-                validUser.setPassword("valid-Password123");
+        public void testValidLoginAndLogout() throws Exception {
+        User userToLogout = new User();
+        userToLogout.setEmail("new.email@example.com");
+        userToLogout.setPassword("New-Password123");
 
-                // Register the user first
-                when(userRepository.existsById(validUser.getEmail())).thenReturn(false);
-                when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
-                when(userRepository.save(validUser)).thenReturn(validUser);
+        // Register the user first
+        when(userRepository.existsById(userToLogout.getEmail())).thenReturn(false);
+        when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
+        when(userRepository.save(userToLogout)).thenReturn(userToLogout);
 
-                mockMvc.perform(post("/api/users/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(validUser)))
-                        .andExpect(status().isOk())
-                        .andExpect(content().string("User registered successfully"));
+        mockMvc.perform(post("/api/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(userToLogout)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("User registered successfully"));
 
-                // Simulate the user already existing in the repository with the encoded password
-                when(userRepository.findById(validUser.getEmail())).thenReturn(Optional.of(validUser));
-                when(passwordEncoder.matches("validPassword123", "encodedPassword")).thenReturn(true);
+        // Simulate the user already existing in the repository with the encoded password
+        when(userRepository.findById(userToLogout.getEmail())).thenReturn(Optional.of(userToLogout));
+        when(passwordEncoder.matches("logoutPassword123", "encodedPassword")).thenReturn(true);
 
-                // Attempt to log in with the correct credentials
-                mockMvc.perform(post("/api/users/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(validUser)))
-                        .andExpect(status().isOk())
-                        .andExpect(content().string("Login successful"));
+        // Log in the user to establish a session
+        mockMvc.perform(post("/api/users/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(userToLogout)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Login successful"));
 
-                // Clean up
-                mockMvc.perform(delete("/api/users/delete/" + validUser.getEmail())
-                        .contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(status().isOk());
+        // Log out the user
+        mockMvc.perform(post("/api/users/logout")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Logout successful"));
+
+        // Clean up
+        mockMvc.perform(delete("/api/users/delete/" + userToLogout.getEmail())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
         }
 
         @Test
@@ -397,15 +399,24 @@ class BackendApplicationTests {
         }
 
         @Test
-        public void testLogoutUser() {
-                HttpSession session = new MockHttpSession();
-                session.setAttribute("userEmail", user.getEmail());
+        public void testValidPostService() throws Exception {
+                // Create the PostService object
+                PostService postService = new PostService();
+                postService.setTypeService("Test Service");
+                postService.setDescription("This is a test service description");
+                postService.setEmailService("test@example.com");
+                postService.setPhoneService("123-456-7890");
+                postService.setCityService("Test City");
+                postService.setProvinceService("Test Province");
+                postService.setCountryService("Test Country");
+                postService.setPostedBy("user@example.com");
 
-                ResponseEntity<String> response = userController.logoutUser(session);
-
-                assertEquals("Logout successful", response.getBody());
-                assertEquals(200, response.getStatusCodeValue());
-                //assertEquals(null, session.getAttribute("userEmail")); // Session is invalidated
+                // Post the service
+                mockMvc.perform(post("/api/users/postservices")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(postService)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().string("Posted Successfully"));
         }
 
         @Test

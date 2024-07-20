@@ -1,5 +1,7 @@
 package com.FIA.backend;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -21,6 +23,9 @@ public class User {
 
     @Column(name = "reset_token")
     private String resetToken;
+
+    @Column(name = "token_expiration_time")
+    private LocalDateTime tokenExpirationTime;
 
     public String getEmail() {
         return email;
@@ -100,5 +105,13 @@ public class User {
 
     public void setResetToken(String resetToken) {
         this.resetToken = resetToken;
+    }
+
+    public LocalDateTime getTokenExpirationTime() {
+        return tokenExpirationTime;
+    }
+
+    public void setTokenExpirationTime(LocalDateTime tokenExpirationTime) {
+        this.tokenExpirationTime = tokenExpirationTime;
     }
 }

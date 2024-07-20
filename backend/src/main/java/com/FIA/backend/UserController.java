@@ -1,5 +1,6 @@
 package com.FIA.backend;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -108,6 +109,7 @@ public class UserController {
         User existingUser = userRepository.findById(user.getEmail()).orElse(null);
         if (existingUser != null) {
             existingUser.setResetToken(token);
+            existingUser.setTokenExpirationTime(LocalDateTime.now().plusMinutes(5));
             userRepository.save(existingUser);
 
             String resetLink = "http://localhost:3000/ResetPassword?token=" + token + "&email=" + user.getEmail();
@@ -130,9 +132,38 @@ public class UserController {
             return ResponseEntity.badRequest().body("Invalid email or token");
         }
 
+        if (user.getTokenExpirationTime() == null || LocalDateTime.now().isAfter(user.getTokenExpirationTime())) {
+            user.setResetToken(null); // Clear the token
+            user.setTokenExpirationTime(null); // Clear the expiration time
+            userRepository.save(user);
+            return ResponseEntity.badRequest().body("Reset password link has expired");
+        }
+
+        // Password validation
+        String passwordRegex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&-])[A-Za-z\\d@$!%*?&-]{8,}$";
+        Pattern passwordPattern = Pattern.compile(passwordRegex);
+        Matcher passwordMatcher = passwordPattern.matcher(user.getPassword());
+
+        if (!passwordMatcher.matches()) {
+            HttpHeaders headers;
+            headers = new HttpHeaders();
+            headers.add("Content-Type", "text/html; charset=UTF-8");
+            return new ResponseEntity<>(
+                "Password is invalid. Valid password must contain:<br>" +
+                "At least one uppercase letter<br>" +
+                "At least one lowercase letter<br>" +
+                "At least one digit<br>" +
+                "At least one special character: @, $, !, %, *, ?, &, -<br>" +
+                "Minimum length of 8 characters",
+                headers,
+                HttpStatus.BAD_REQUEST
+            );
+        }
+
         // Hash the new password before saving
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setResetToken(null); // Clear the token after reset
+        user.setTokenExpirationTime(null); // Clear the expiration time after reset
         userRepository.save(user);
 
         return ResponseEntity.ok("Password has been reset successfully");

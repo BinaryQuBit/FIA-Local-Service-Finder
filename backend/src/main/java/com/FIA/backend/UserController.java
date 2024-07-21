@@ -1,11 +1,9 @@
 package com.FIA.backend;
 
 import java.util.List;
-
-import java.util.Optional;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +65,7 @@ public class UserController {
             existingUser.setResetToken(token);
             userRepository.save(existingUser);
 
-            String resetLink = "http://localhost:3000/ResetPassword?token=" + token + "&email=" + user.getEmail();
+            String resetLink = "http://64.201.200.32:97/ResetPassword?token=" + token + "&email=" + user.getEmail();
             emailService.sendResetPasswordEmail(user.getEmail(), resetLink);
 
             return ResponseEntity.ok("Check your email for reset password link");

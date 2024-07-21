@@ -21,7 +21,7 @@ function Home() {
     }
 
     try {
-      const response = await axios.post('http://localhost:8080/api/users/login', { email, password }, { withCredentials: true });
+      const response = await axios.post('http://64.201.200.32:98/api/users/login', { email, password }, { withCredentials: true });
       if (response.status === 200) {
         login(email);
         navigate('/Profile');

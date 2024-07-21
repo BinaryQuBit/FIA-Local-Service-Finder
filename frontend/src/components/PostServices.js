@@ -35,7 +35,7 @@ function PostServices() {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/users/postservices",
+        "http://64.201.200.32:98/api/users/postservices",
         {
           method: "POST",
           headers: {

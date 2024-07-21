@@ -1,5 +1,6 @@
 package com.FIA.backend;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -108,8 +109,9 @@ class BackendApplicationTests {
                                 "At least one uppercase letter<br>" +
                                 "At least one lowercase letter<br>" +
                                 "At least one digit<br>" +
-                                "At least one special character: @, $, !, %, *, ?, &, -<br>" +
-                                "Minimum length of 8 characters"));
+                                "At least one special character: @, $, !, %, *, ?, & or -<br>" +
+                                "Minimum length of 8 characters<br>" +
+                                "No spaces"));
         }
         
         @Test
@@ -303,9 +305,11 @@ class BackendApplicationTests {
         @Test
         public void testValidResetPassword() throws Exception {
                 User existingUser = new User();
-                existingUser.setEmail("existingemail0@example.com");
+                existingUser.setEmail("existingemail404@example.com");
                 existingUser.setPassword("existing@@Password123");
                 existingUser.setResetToken("validToken");
+
+                existingUser.setTokenExpirationTime(LocalDateTime.now().plusMinutes(5));
 
                 // Register the user first
                 when(userRepository.existsById(existingUser.getEmail())).thenReturn(false);
@@ -325,7 +329,7 @@ class BackendApplicationTests {
                 // Attempt to reset the password with a valid token
                 Map<String, String> payload = Map.of(
                 "email", existingUser.getEmail(),
-                "newPassword", "newValidPassword123",
+                "newPassword", "ThePass@1234",
                 "token", "validToken"
                 );
 

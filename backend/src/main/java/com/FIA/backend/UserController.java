@@ -47,7 +47,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
-        // Email  validation
+        // Email validation
         String emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(user.getEmail());
@@ -57,21 +57,37 @@ public class UserController {
         }
 
         // Password validation
-        String passwordRegex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&-])[A-Za-z\\d@$!%*?&-]{8,}$";
-        Pattern passwordPattern = Pattern.compile(passwordRegex);
-        Matcher passwordMatcher = passwordPattern.matcher(user.getPassword());
+        String newPassword = user.getPassword();
+        boolean hasUpperCase = false;
+        boolean hasLowerCase = false;
+        boolean hasDigit = false;
+        boolean hasSpecialChar = false;
+        boolean hasValidLength = newPassword.length() >= 8;
+        boolean hasSpace = newPassword.contains(" ");
 
-        if (!passwordMatcher.matches()) {
-            HttpHeaders headers;
-            headers = new HttpHeaders();
+        for (char c : newPassword.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                hasUpperCase = true;
+            } else if (Character.isLowerCase(c)) {
+                hasLowerCase = true;
+            } else if (Character.isDigit(c)) {
+                hasDigit = true;
+            } else if ("@$!%*?&-".indexOf(c) != -1) {
+                hasSpecialChar = true;
+            }
+        }
+
+        if (!hasUpperCase || !hasLowerCase || !hasDigit || !hasSpecialChar || !hasValidLength || hasSpace) {
+            HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "text/html; charset=UTF-8");
             return new ResponseEntity<>(
                 "Password is invalid. Valid password must contain:<br>" +
                 "At least one uppercase letter<br>" +
                 "At least one lowercase letter<br>" +
                 "At least one digit<br>" +
-                "At least one special character: @, $, !, %, *, ?, &, -<br>" +
-                "Minimum length of 8 characters",
+                "At least one special character: @, $, !, %, *, ?, & or -<br>" +
+                "Minimum length of 8 characters<br>" +
+                "No spaces",
                 headers,
                 HttpStatus.BAD_REQUEST
             );
@@ -140,21 +156,36 @@ public class UserController {
         }
 
         // Password validation
-        String passwordRegex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&-])[A-Za-z\\d@$!%*?&-]{8,}$";
-        Pattern passwordPattern = Pattern.compile(passwordRegex);
-        Matcher passwordMatcher = passwordPattern.matcher(user.getPassword());
+        boolean hasUpperCase = false;
+        boolean hasLowerCase = false;
+        boolean hasDigit = false;
+        boolean hasSpecialChar = false;
+        boolean hasValidLength = newPassword.length() >= 8;
+        boolean hasSpace = newPassword.contains(" ");
 
-        if (!passwordMatcher.matches()) {
-            HttpHeaders headers;
-            headers = new HttpHeaders();
+        for (char c : newPassword.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                hasUpperCase = true;
+            } else if (Character.isLowerCase(c)) {
+                hasLowerCase = true;
+            } else if (Character.isDigit(c)) {
+                hasDigit = true;
+            } else if ("@$!%*?&-".indexOf(c) != -1) {
+                hasSpecialChar = true;
+            }
+        }
+
+        if (!hasUpperCase || !hasLowerCase || !hasDigit || !hasSpecialChar || !hasValidLength || hasSpace) {
+            HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "text/html; charset=UTF-8");
             return new ResponseEntity<>(
                 "Password is invalid. Valid password must contain:<br>" +
                 "At least one uppercase letter<br>" +
                 "At least one lowercase letter<br>" +
                 "At least one digit<br>" +
-                "At least one special character: @, $, !, %, *, ?, &, -<br>" +
-                "Minimum length of 8 characters",
+                "At least one special character: @, $, !, %, *, ?, & or -<br>" +
+                "Minimum length of 8 characters<br>" +
+                "No spaces",
                 headers,
                 HttpStatus.BAD_REQUEST
             );

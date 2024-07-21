@@ -1,18 +1,23 @@
 package com.FIA.backend;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.mockito.ArgumentMatchers.anyString;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,10 +26,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -63,7 +64,7 @@ class BackendApplicationTests {
         @Test
         public void testValidUser() throws Exception {
                 User validUser = new User();
-                validUser.setEmail("valid.email11@example.com");
+                validUser.setEmail("valid.email91@example.com");
                 validUser.setPassword("validPassword-123");
 
                 when(userRepository.existsById(validUser.getEmail())).thenReturn(false);
@@ -433,6 +434,43 @@ class BackendApplicationTests {
                 assertEquals("No services found", response.getBody());
                 assertEquals(200, response.getStatusCodeValue());
                 assertTrue(((String) response.getBody()).contains("No services found"));
+        }
+
+        @Test
+        public void testPasswordLengthBoundary() throws Exception {
+        // Password length at lower boundary (7 characters)
+        User shortPasswordUser = new User();
+        shortPasswordUser.setEmail("lowerboundary@example.com");
+        shortPasswordUser.setPassword("Short7!");
+
+        mockMvc.perform(post("/api/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(shortPasswordUser)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(
+                        "Password is invalid. Valid password must contain:<br>" +
+                        "At least one uppercase letter<br>" +
+                        "At least one lowercase letter<br>" +
+                        "At least one digit<br>" +
+                        "At least one special character: @, $, !, %, *, ?, & or -<br>" +
+                        "Minimum length of 8 characters<br>" +
+                        "No spaces"));
+
+        // Password length at boundary (8 characters)
+        User validPasswordUser = new User();
+        validPasswordUser.setEmail("valid.at8boundary@example.com");
+        validPasswordUser.setPassword("Valid8-0");
+
+        mockMvc.perform(post("/api/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(validPasswordUser)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("User registered successfully"));
+
+        // Clean up
+        mockMvc.perform(delete("/api/users/delete/" + validPasswordUser.getEmail())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
         }
 
         // @Test

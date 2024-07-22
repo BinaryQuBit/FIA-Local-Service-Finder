@@ -1,23 +1,20 @@
 package com.FIA.backend;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.anyString;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,6 +23,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -406,7 +407,7 @@ class BackendApplicationTests {
         @Test
         public void testValidPostService() throws Exception {
                 // Create the PostService object
-                PostService postService = new PostService();
+                PostService postService = new PostService("Service 1", "Description 1");
                 postService.setTypeService("Test Service");
                 postService.setDescription("This is a test service description");
                 postService.setEmailService("test@example.com");
@@ -438,71 +439,56 @@ class BackendApplicationTests {
 
         @Test
         public void testPasswordLengthBoundary() throws Exception {
-        // Password length at lower boundary (7 characters)
-        User shortPasswordUser = new User();
-        shortPasswordUser.setEmail("lowerboundary@example.com");
-        shortPasswordUser.setPassword("Short7!");
+                // Password length at lower boundary (7 characters)
+                User shortPasswordUser = new User();
+                shortPasswordUser.setEmail("lowerboundary@example.com");
+                shortPasswordUser.setPassword("Short7!");
 
-        mockMvc.perform(post("/api/users/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(shortPasswordUser)))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string(
-                        "Password is invalid. Valid password must contain:<br>" +
-                        "At least one uppercase letter<br>" +
-                        "At least one lowercase letter<br>" +
-                        "At least one digit<br>" +
-                        "At least one special character: @, $, !, %, *, ?, & or -<br>" +
-                        "Minimum length of 8 characters<br>" +
-                        "No spaces"));
+                mockMvc.perform(post("/api/users/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(shortPasswordUser)))
+                        .andExpect(status().isBadRequest())
+                        .andExpect(content().string(
+                                "Password is invalid. Valid password must contain:<br>" +
+                                "At least one uppercase letter<br>" +
+                                "At least one lowercase letter<br>" +
+                                "At least one digit<br>" +
+                                "At least one special character: @, $, !, %, *, ?, & or -<br>" +
+                                "Minimum length of 8 characters<br>" +
+                                "No spaces"));
 
-        // Password length at boundary (8 characters)
-        User validPasswordUser = new User();
-        validPasswordUser.setEmail("valid.at8boundary@example.com");
-        validPasswordUser.setPassword("Valid8-0");
+                // Password length at boundary (8 characters)
+                User validPasswordUser = new User();
+                validPasswordUser.setEmail("valid.at8boundary@example.com");
+                validPasswordUser.setPassword("Valid8-0");
 
-        mockMvc.perform(post("/api/users/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(validPasswordUser)))
-                .andExpect(status().isOk())
-                .andExpect(content().string("User registered successfully"));
+                mockMvc.perform(post("/api/users/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(validPasswordUser)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().string("User registered successfully"));
 
-        // Clean up
-        mockMvc.perform(delete("/api/users/delete/" + validPasswordUser.getEmail())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                // Clean up
+                mockMvc.perform(delete("/api/users/delete/" + validPasswordUser.getEmail())
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk());
         }
 
-        // @Test
-        // public void testInvalidEmailFormat() {
-        //     Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-        //         user.setEmail("invalid-email");
-        //     });
-        //     assertEquals("Invalid email format", exception.getMessage());
-        // }
 
-        // @Test
-        // public void testInvalidPassword() {
-        //     Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-        //         user.setPassword("123"); // Password too short
-        //     });
-        //     assertEquals("Invalid password format", exception.getMessage());
-        // }
+        @Test
+        public void testGetAllServices_ServicesFound() {
+                // Create a list of services to be returned by the mock
+                PostService service1 = new PostService("Service 1", "Description 1");
+                PostService service2 = new PostService("Service 2", "Description 2");
+                List<PostService> services = List.of(service1, service2);
 
-        // @Test
-        // public void testGetAllServices_ServicesFound() {
-        //     // Create a list of services to be returned by the mock
-        //     PostService service1 = new PostService("Service 1", "Description 1");
-        //     PostService service2 = new PostService("Service 2", "Description 2");
-        //     List<PostService> services = List.of(service1, service2);
+                // Mock the postServiceRepository to return the list of services
+                when(postServiceRepository.findAll()).thenReturn(services);
 
-        //     // Mock the postServiceRepository to return the list of services
-        //     when(postServiceRepository.findAll()).thenReturn(services);
+                ResponseEntity<?> response = userController.getAllServices();
 
-        //     ResponseEntity<?> response = userController.getAllServices();
-
-        //     assertEquals(200, response.getStatusCodeValue());
-        //     assertFalse(((List<PostService>) response.getBody()).isEmpty());
-        //     assertEquals(2, ((List<PostService>) response.getBody()).size());
-        // }
+                assertEquals(200, response.getStatusCodeValue());
+                assertFalse(((List<PostService>) response.getBody()).isEmpty());
+                assertEquals(2, ((List<PostService>) response.getBody()).size());
+        }
 }

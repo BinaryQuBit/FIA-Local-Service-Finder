@@ -1,32 +1,39 @@
 package com.FIA.backend;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import org.hamcrest.Matchers;
+
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.mockito.ArgumentMatchers.anyString;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -157,6 +164,7 @@ class BackendApplicationTests {
                 when(userRepository.existsById(existingUser.getEmail())).thenReturn(true);
 
                 // Attempt to register the same user again
+                // Above the boundary
                 mockMvc.perform(post("/api/users/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(existingUser)))
@@ -349,42 +357,42 @@ class BackendApplicationTests {
 
         @Test
         public void testValidLoginAndLogout() throws Exception {
-        User userToLogout = new User();
-        userToLogout.setEmail("new.email@example.com");
-        userToLogout.setPassword("New-Password123");
+                User userToLogout = new User();
+                userToLogout.setEmail("new.email25@example.com");
+                userToLogout.setPassword("New-Password123");
 
-        // Register the user first
-        when(userRepository.existsById(userToLogout.getEmail())).thenReturn(false);
-        when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
-        when(userRepository.save(userToLogout)).thenReturn(userToLogout);
+                // Register the user first
+                when(userRepository.existsById(userToLogout.getEmail())).thenReturn(false);
+                when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
+                when(userRepository.save(userToLogout)).thenReturn(userToLogout);
 
-        mockMvc.perform(post("/api/users/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(userToLogout)))
-                .andExpect(status().isOk())
-                .andExpect(content().string("User registered successfully"));
+                mockMvc.perform(post("/api/users/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(userToLogout)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().string("User registered successfully"));
 
-        // Simulate the user already existing in the repository with the encoded password
-        when(userRepository.findById(userToLogout.getEmail())).thenReturn(Optional.of(userToLogout));
-        when(passwordEncoder.matches("logoutPassword123", "encodedPassword")).thenReturn(true);
+                // Simulate the user already existing in the repository with the encoded password
+                when(userRepository.findById(userToLogout.getEmail())).thenReturn(Optional.of(userToLogout));
+                when(passwordEncoder.matches("logoutPassword123", "encodedPassword")).thenReturn(true);
 
-        // Log in the user to establish a session
-        mockMvc.perform(post("/api/users/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(userToLogout)))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Login successful"));
+                // Log in the user to establish a session
+                mockMvc.perform(post("/api/users/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(userToLogout)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().string("Login successful"));
 
-        // Log out the user
-        mockMvc.perform(post("/api/users/logout")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Logout successful"));
+                // Log out the user
+                mockMvc.perform(post("/api/users/logout")
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk())
+                        .andExpect(content().string("Logout successful"));
 
-        // Clean up
-        mockMvc.perform(delete("/api/users/delete/" + userToLogout.getEmail())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                // Clean up
+                mockMvc.perform(delete("/api/users/delete/" + userToLogout.getEmail())
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk());
         }
 
         @Test
@@ -474,6 +482,35 @@ class BackendApplicationTests {
                         .andExpect(status().isOk());
         }
 
+        @Test
+        public void testLowerBoundaryForEmail() throws Exception {
+                User userToDelete = new User();
+                userToDelete.setEmail("user.to.delete@example.com");
+                userToDelete.setPassword("deletePassword@123");
+
+                // Register the user first
+                when(userRepository.existsById(userToDelete.getEmail())).thenReturn(false);
+                when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
+
+                mockMvc.perform(post("/api/users/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(userToDelete)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().string("User registered successfully"));
+
+                // Now delete the user
+                mockMvc.perform(delete("/api/users/delete/" + userToDelete.getEmail())
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk())
+                        .andExpect(content().string("User deleted successfully"));
+
+                // Trying to delete the user again to go from 0 to -1
+                mockMvc.perform(delete("/api/users/delete/" + userToDelete.getEmail())
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isNotFound())
+                        .andExpect(content().string("User not found"));
+        }
+
 
         @Test
         public void testGetAllServices_ServicesFound() {
@@ -490,5 +527,105 @@ class BackendApplicationTests {
                 assertEquals(200, response.getStatusCodeValue());
                 assertFalse(((List<PostService>) response.getBody()).isEmpty());
                 assertEquals(2, ((List<PostService>) response.getBody()).size());
+        }
+
+        @Test
+        public void testUpdatePostStatus_PostNotFound() throws Exception {
+                Long nonExistentPostId = 999L;
+
+                when(postServiceRepository.findById(nonExistentPostId)).thenReturn(Optional.empty());
+
+                // Perform the PUT request to update the status of the non-existent post
+                mockMvc.perform(put("/api/users/postservices/" + nonExistentPostId)
+                        .contentType(MediaType.TEXT_PLAIN)
+                        .content("Completed"))
+                        .andExpect(status().isNotFound())
+                        .andExpect(content().string("Post not found"));
+        }
+
+        @Test
+        public void testGetUserInfo_UserNotFound() throws Exception {
+                String userEmail = "nonexistent@example.com";
+
+                // Create a mock session with the userEmail attribute
+                MockHttpSession session = new MockHttpSession();
+                session.setAttribute("userEmail", userEmail);
+
+                // Mock the userRepository to return an empty Optional when findById is called with userEmail
+                when(userRepository.findById(userEmail)).thenReturn(Optional.empty());
+
+                // Perform the GET request to retrieve user info
+                mockMvc.perform(get("/api/users/userinfo")
+                        .session(session))
+                        .andExpect(status().isNotFound())
+                        .andExpect(content().string("User not found"));
+        }
+
+        @Test
+        public void testGetUserInfo_UserNotLoggedIn() throws Exception {
+                // Create a mock session without the userEmail attribute
+                MockHttpSession session = new MockHttpSession();
+
+                // Perform the GET request to retrieve user info
+                mockMvc.perform(get("/api/users/userinfo")
+                        .session(session))
+                        .andExpect(status().isUnauthorized())
+                        .andExpect(content().string("User is not logged in"));
+        }
+
+        @Test
+        public void testGetUserInfo_UserLoggedIn() throws Exception {
+                User userToLogout = new User();
+                userToLogout.setEmail("new.22email@example.com");
+                userToLogout.setPassword("New-Password123");
+        
+                // Register the user first
+                when(userRepository.existsById(userToLogout.getEmail())).thenReturn(false);
+                when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
+                when(userRepository.save(any(User.class))).thenAnswer(invocation -> {
+                User savedUser = invocation.getArgument(0);
+                savedUser.setPassword("encodedPassword");
+                return savedUser;
+                });
+        
+                mockMvc.perform(post("/api/users/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(userToLogout)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().string("User registered successfully"));
+        
+                // Simulate the user already existing in the repository with the encoded password
+                when(userRepository.findById(userToLogout.getEmail())).thenReturn(Optional.of(userToLogout));
+                when(passwordEncoder.matches("New-Password123", "encodedPassword")).thenReturn(true);
+        
+                // Log in the user to establish a session
+                MockHttpSession session = new MockHttpSession();
+                mockMvc.perform(post("/api/users/login")
+                        .session(session)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(userToLogout)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().string("Login successful"));
+        
+                // Modify user object to have the encoded password
+                userToLogout.setPassword("encodedPassword");
+        
+                // Check user info, ignoring the password field
+                mockMvc.perform(get("/api/users/userinfo")
+                        .session(session))
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.email").value(userToLogout.getEmail()));
+        
+                // Log out the user
+                mockMvc.perform(post("/api/users/logout")
+                        .session(session)
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk())
+                        .andExpect(content().string("Logout successful"));
+        
+                // Clean up
+                mockMvc.perform(delete("/api/users/delete/" + userToLogout.getEmail())
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk());
         }
 }

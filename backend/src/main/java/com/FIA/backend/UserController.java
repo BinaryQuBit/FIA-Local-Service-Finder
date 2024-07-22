@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -128,7 +130,7 @@ public class UserController {
             existingUser.setTokenExpirationTime(LocalDateTime.now().plusMinutes(5));
             userRepository.save(existingUser);
 
-            String resetLink = "http://localhost:3000/ResetPassword?token=" + token + "&email=" + user.getEmail();
+            String resetLink = "http://64.201.200.32:97/ResetPassword?token=" + token + "&email=" + user.getEmail();
             emailService.sendResetPasswordEmail(user.getEmail(), resetLink);
 
             return ResponseEntity.ok("Check your email for reset password link");

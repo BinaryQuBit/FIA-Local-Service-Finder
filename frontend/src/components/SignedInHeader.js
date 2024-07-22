@@ -14,7 +14,7 @@ function SignedInHeader() {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/users/userinfo', {
+        const response = await fetch('http://64.201.200.32:98/api/users/userinfo', {
           credentials: 'include',
         });
         if (response.ok) {

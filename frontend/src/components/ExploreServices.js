@@ -12,7 +12,7 @@ function ExploreServices() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/users/postservices');
+        const response = await fetch('http://64.201.200.32:98/api/users/postservices');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

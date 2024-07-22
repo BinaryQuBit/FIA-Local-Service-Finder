@@ -19,7 +19,7 @@ function ForgotPassword() {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/api/users/resetPassword', {
+      const response = await fetch('http://64.201.200.32:98/api/users/resetPassword', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -28,6 +28,7 @@ function ForgotPassword() {
       });
 
       if (response.ok) {
+        navigate('/');
         const result = await response.text();
         setResetMessage(result);
         setStep(2);

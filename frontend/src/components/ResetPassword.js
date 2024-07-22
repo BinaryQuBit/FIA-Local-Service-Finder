@@ -18,7 +18,7 @@ function ResetPassword() {
         return;
     }
 
-    if (newPassword !== confirmPassword) {
+    if (newPassword !== confirmPassword) { 
         setError('New password and confirm password do not match');
         return;
     }
@@ -28,7 +28,7 @@ function ResetPassword() {
     const token = urlParams.get('token');
 
     try {
-        const response = await fetch('http://localhost:8080/api/users/reset-password', {
+        const response = await fetch('http://64.201.200.32:98/api/users/reset-password', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -18,7 +18,7 @@ function Profile() {
   const fetchPosts = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8080/api/users/postservices"
+        "http://64.201.200.32:98/api/users/postservices"
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -40,7 +40,7 @@ function Profile() {
 
   const handleStatusChange = async (postId, newStatus) => {
     try {
-      const response = await axios.put(`http://localhost:8080/api/users/postservices/${postId}`, newStatus, { 
+      const response = await axios.put(`http://64.201.200.32:98/api/users/postservices/${postId}`, newStatus, { 
         headers: { 'Content-Type': 'text/plain' }, 
         withCredentials: true 
       });
@@ -59,7 +59,7 @@ function Profile() {
 
   const handleDelete = async (postId) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/users/postservices/${postId}`, {
+      const response = await fetch(`http://64.201.200.32:98/api/users/postservices/${postId}`, {
         method: 'DELETE',
       });
       if (!response.ok) {

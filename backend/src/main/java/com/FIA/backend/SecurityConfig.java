@@ -21,7 +21,8 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authz -> authz
 
-                .requestMatchers("/api/users/register", "/api/users/login", "/api/users/logout", "/api/users/reset-password", "/api/users/resetPassword", "/api/users/userinfo", "/api/users/postservices", "/api/users/postservices/{id}").permitAll()
+                .requestMatchers("/api/users/register", "/api/users/login", "/api/users/logout", "/api/users/resetPassword", "/api/users/reset-password", "/api/users/userinfo", "/api/users/postservices", "/api/users/postservices/{id}", "/api/users/delete/**").permitAll()
+
 
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()

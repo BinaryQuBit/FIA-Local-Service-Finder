@@ -47,7 +47,7 @@ function Register() {
         setTimeout(() => {
           setShowAlert(false);
           navigate('/');
-        }, 2000);
+        }, 2500);
       } else {
         const result = await response.text();
         setError(result);
@@ -62,7 +62,7 @@ function Register() {
       <Header />
       <div className="register-container">
         <h2>Register</h2>
-        {error && <div className="error-message">{error}</div>}
+        {error && <div className="error-message"dangerouslySetInnerHTML={{ __html: error }}/>}
         {showAlert && (
           <div className="custom-alert">
             Your account is successfully created!

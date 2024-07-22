@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2024 Aman Padda
+Copyright © 2024 Aman Padda, Feras Aljoudi and Ihab Mohamad
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

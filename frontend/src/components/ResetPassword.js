@@ -7,6 +7,7 @@ function ResetPassword() {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
+    const [showAlert, setShowAlert] = useState(false);
     const navigate = useNavigate();
 
     const handleResetPassword = async (e) => {
@@ -36,8 +37,11 @@ function ResetPassword() {
         });
 
         if (response.ok) {
-        alert('Password has been reset successfully');
-        navigate('/');
+            setShowAlert(true);
+            setTimeout(() => {
+                setShowAlert(false);
+                navigate('/');
+            }, 2500);
         } else {
         const result = await response.text();
         setError(result);
@@ -52,7 +56,12 @@ function ResetPassword() {
         <Header />
         <div className="reset-pass-container">
         <h2>Reset Password</h2>
-        {error && <div className="error-message">{error}</div>}
+        {error && <div className="error-message"dangerouslySetInnerHTML={{ __html: error }}/>}
+        {showAlert && (
+            <div className="pass-changed-alert">
+                Your password has been reset successfully!
+            </div>
+        )}
         <form onSubmit={handleResetPassword} className="reset-password-form">
             <input
             type="password"
@@ -68,7 +77,12 @@ function ResetPassword() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             className="reset-password-input"
             />
-            <button type="submit" className="reset-password-button">Reset Password</button>
+            <div className="button-container">
+                <button type="button" className="resend-link-button" onClick={() => navigate('/ForgotPassword')}>
+                    Resend Link
+                </button>
+                <button type="submit" className="reset-password-button">Reset Password</button>
+            </div>
         </form>
         </div>
     </div>

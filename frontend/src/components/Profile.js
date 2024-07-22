@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import Accordion from "react-bootstrap/Accordion";
 import { AuthContext } from "../AuthContext";
 import DateTime from "./DateTime";
 import "./Profile.css";
 import SignedInHeader from "./SignedInHeader";
-import { Tabs, Tab } from "react-bootstrap";
 import axios from 'axios';
 
-const statusOptions = ["Active", "In Progress", "Completed"];
+const statusOptions = ["Active", "In Progress", "Completed", "All"];
+const backendUrl = process.env.REACT_APP_BACKEND_PORT;
 
 function Profile() {
   const { user } = useContext(AuthContext);
@@ -18,7 +17,7 @@ function Profile() {
   const fetchPosts = async () => {
     try {
       const response = await fetch(
-        "http://64.201.200.32:98/api/users/postservices"
+        `${backendUrl}/api/users/postservices`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -40,7 +39,7 @@ function Profile() {
 
   const handleStatusChange = async (postId, newStatus) => {
     try {
-      const response = await axios.put(`http://64.201.200.32:98/api/users/postservices/${postId}`, newStatus, { 
+      const response = await axios.put(`${backendUrl}/api/users/postservices/${postId}`, newStatus, { 
         headers: { 'Content-Type': 'text/plain' }, 
         withCredentials: true 
       });
@@ -59,7 +58,7 @@ function Profile() {
 
   const handleDelete = async (postId) => {
     try {
-      const response = await fetch(`http://64.201.200.32:98/api/users/postservices/${postId}`, {
+      const response = await fetch(`${backendUrl}/api/users/postservices/${postId}`, {
         method: 'DELETE',
       });
       if (!response.ok) {
@@ -80,17 +79,17 @@ function Profile() {
       <SignedInHeader />
       <div className="profile">
         <h1>My Posts</h1>
-        <Tabs
-          id="status-filter-tabs"
-          activeKey={filter}
-          onSelect={(k) => setFilter(k)}
-          className="mb-3"
-        >
-          <Tab eventKey="All" title="All"></Tab>
-          <Tab eventKey="Active" title="Active"></Tab>
-          <Tab eventKey="In Progress" title="In Progress"></Tab>
-          <Tab eventKey="Completed" title="Completed"></Tab>
-        </Tabs>
+        <div className="tabs">
+          {statusOptions.map((option) => (
+            <div
+              key={option}
+              className={`tab ${filter === option ? 'active' : ''}`}
+              onClick={() => setFilter(option)}
+            >
+              {option}
+            </div>
+          ))}
+        </div>
         <div className="posts">
           {message ? (
             <p>{message}</p>
@@ -99,37 +98,37 @@ function Profile() {
               <div key={post.post_id} className="post">
                 <h2>{post.typeService}</h2>
                 <DateTime timestamp={post.timestamp} />
-                <Accordion defaultActiveKey="0">
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header>Description</Accordion.Header>
-                    <Accordion.Body>{post.description}</Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="1">
-                    <Accordion.Header>Location and Contact Info</Accordion.Header>
-                    <Accordion.Body>
+                <div className="accordion">
+                  <div className="accordion-item">
+                    <div className="accordion-header">Description</div>
+                    <div className="accordion-body">{post.description}</div>
+                  </div>
+                  <div className="accordion-item">
+                    <div className="accordion-header">Location and Contact Info</div>
+                    <div className="accordion-body">
                       <p><strong>Email:</strong> {post.emailService}</p>
                       <p><strong>Phone:</strong> {post.phoneService}</p>
                       <p><strong>Country:</strong> {post.countryService}</p>
                       <p><strong>Province:</strong> {post.provinceService}</p>
                       <p><strong>City:</strong> {post.cityService}</p>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
-                <div className="actionButtons">
-                <div>
-                  Status: {" "}
-                  <select
-                    value={post.status}
-                    onChange={(e) => handleStatusChange(post.postId, e.target.value)}
-                  >
-                    {statusOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
+                    </div>
+                  </div>
                 </div>
-                <button onClick={() => handleDelete(post.postId)}>Delete</button>
+                <div className="action-buttons">
+                  <div>
+                    Status: 
+                    <select
+                      value={post.status}
+                      onChange={(e) => handleStatusChange(post.postId, e.target.value)}
+                    >
+                      {statusOptions.slice(0, 3).map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <button className="delete-button" onClick={() => handleDelete(post.postId)}>Delete</button>
                 </div>
               </div>
             ))

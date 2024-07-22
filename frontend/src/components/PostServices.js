@@ -4,6 +4,8 @@ import SignedInHeader from "./SignedInHeader";
 import "./PostServices.css";
 import { AuthContext } from "../AuthContext";
 
+const backendUrl = process.env.REACT_APP_BACKEND_PORT;
+
 function PostServices() {
   const { user } = useContext(AuthContext);
   const [typeService, setTypeService] = useState("");
@@ -35,7 +37,7 @@ function PostServices() {
 
     try {
       const response = await fetch(
-        "http://64.201.200.32:98/api/users/postservices",
+      `${backendUrl}/api/users/postservices`,
         {
           method: "POST",
           headers: {

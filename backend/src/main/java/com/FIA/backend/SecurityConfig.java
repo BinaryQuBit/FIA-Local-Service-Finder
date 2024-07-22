@@ -20,16 +20,20 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authz -> authz
-
-                .requestMatchers("/api/users/register", "/api/users/login", "/api/users/logout", "/api/users/resetPassword", "/api/users/reset-password", "/api/users/userinfo", "/api/users/postservices", "/api/users/postservices/{id}", "/api/users/delete/**").permitAll()
-
-
+                .requestMatchers("/api/users/register", "/api/users/login", "/api/users/logout", "/api/users/resetPassword", "/api/users/reset-password", "/api/users/userinfo", "/api/users/postservices", "/api/users/postservices/{id}", "/api/users/accountsettings", "/api/users/delete/**").permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()
             )
             .cors(cors -> cors.configurationSource(corsConfigurationSource))
             .formLogin(form -> form
                 .loginPage("/login")
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .logoutUrl("/api/users/logout")
+                .logoutSuccessUrl("/login?logout")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
                 .permitAll()
             )
             .sessionManagement(session -> session

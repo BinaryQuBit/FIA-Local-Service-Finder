@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import './ResetPassword.css';
 import Header from './Header';
 
+const backendUrl = process.env.REACT_APP_BACKEND_PORT;
+
 function ResetPassword() {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -28,7 +30,7 @@ function ResetPassword() {
     const token = urlParams.get('token');
 
     try {
-        const response = await fetch('http://64.201.200.32:98/api/users/reset-password', {
+        const response = await fetch(`${backendUrl}/api/users/reset-password`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

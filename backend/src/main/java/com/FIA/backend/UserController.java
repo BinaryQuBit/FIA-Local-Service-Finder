@@ -227,15 +227,21 @@ public class UserController {
     @GetMapping("/postservices")
     public ResponseEntity<?> getAllServices() {
         logger.info("Handling GET request for /postservices");
-        List<PostService> services = postServiceRepository.findAll();
-        logger.info("Fetched services: {}", services);
-
-        if (services.isEmpty()) {
-            return ResponseEntity.ok("No services found");
+        try {
+            List<PostService> services = postServiceRepository.findAll();
+            logger.info("Fetched services: {}", services);
+    
+            if (services.isEmpty()) {
+                return ResponseEntity.ok("No services found");
+            }
+    
+            return ResponseEntity.ok(services);
+        } catch (Exception e) {
+            logger.error("Error fetching services: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while fetching services");
         }
-
-        return ResponseEntity.ok(services);
     }
+    
 
     @PostMapping("/postservices")
     public ResponseEntity<String> postService(@RequestBody PostService postservice) {

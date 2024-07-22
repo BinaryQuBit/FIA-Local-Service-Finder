@@ -14,7 +14,14 @@ import jakarta.persistence.Table;
 @Table(name = "postservice")
 public class PostService {
 
-    public PostService(String service_1, String description_1) {
+    // Default constructor
+    public PostService() {
+    }
+
+    // Parameterized constructor
+    public PostService(String typeService, String description) {
+        this.typeService = typeService;
+        this.description = description;
     }
 
     @Id

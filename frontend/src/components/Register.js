@@ -5,6 +5,8 @@ import 'react-phone-input-2/lib/style.css';
 import './Register.css';
 import Header from './Header';
 
+const backendUrl = process.env.REACT_APP_BACKEND_PORT;
+
 function Register() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -34,7 +36,7 @@ function Register() {
     }
   
     try {
-      const response = await fetch('http://64.201.200.32:98/api/users/register', {
+      const response = await fetch(`${backendUrl}/api/users/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

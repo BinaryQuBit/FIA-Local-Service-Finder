@@ -5,6 +5,8 @@ import './Home.css';
 import Header from './Header';
 import { AuthContext } from '../AuthContext';
 
+const backendUrl = process.env.REACT_APP_BACKEND_PORT;
+
 function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,7 +23,7 @@ function Home() {
     }
 
     try {
-      const response = await axios.post('http://64.201.200.32:98/api/users/login', { email, password }, { withCredentials: true });
+      const response = await axios.post(`${backendUrl}/api/users/login`, { email, password }, { withCredentials: true });
       if (response.status === 200) {
         login(email);
         navigate('/Profile');

@@ -4,8 +4,10 @@ import './SignedInHeader.css';
 import FiaLogo from '../Assets/FiaLogo.svg';
 import { AuthContext } from '../AuthContext';
 
+const backendUrl = process.env.REACT_APP_BACKEND_PORT;
+
 function SignedInHeader() {
-  const logout = useContext(AuthContext);
+  const { logout } = useContext(AuthContext); // Destructure logout from AuthContext
   const [initials, setInitials] = useState('');
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -14,7 +16,7 @@ function SignedInHeader() {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await fetch('http://64.201.200.32:98/api/users/userinfo', {
+        const response = await fetch(`${backendUrl}/api/users/userinfo`, {
           credentials: 'include',
         });
         if (response.ok) {
@@ -78,11 +80,11 @@ function SignedInHeader() {
         <div className="initials-circle" onClick={toggleModal}>
           {initials}
         </div>
-        <div className={`modalCustom ${showModal ? 'slide-in' : ''}` } ref={modalRef}>
+        <div className={`modalCustom ${showModal ? 'slide-in' : ''}`} ref={modalRef}>
           <div className="modal-content">
             <NavLink to="/profile" onClick={toggleModal} className={({ isActive }) => (isActive ? 'active-link-modal' : '')}>Profile</NavLink>
             <NavLink to="/account-settings" onClick={toggleModal} className={({ isActive }) => (isActive ? 'active-link-modal' : '')}>Account Settings</NavLink>
-            <NavLink to="/" onClick={() => logout} className={({ isActive }) => (isActive ? 'active-link-modal' : '')}>Logout</NavLink>
+            <NavLink to="/" onClick={() => { logout(); toggleModal(); }} className={({ isActive }) => (isActive ? 'active-link-modal' : '')}>Logout</NavLink>
           </div>
         </div>
       </div>
@@ -91,4 +93,3 @@ function SignedInHeader() {
 }
 
 export default SignedInHeader;
-

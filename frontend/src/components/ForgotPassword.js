@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import './ForgotPassword.css';
 import Header from './Header';
 
+const backendUrl = process.env.REACT_APP_BACKEND_PORT;
+
 function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
@@ -19,7 +21,7 @@ function ForgotPassword() {
     }
 
     try {
-      const response = await fetch('http://64.201.200.32:98/api/users/resetPassword', {
+      const response = await fetch(`${backendUrl}/api/users/resetPassword`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

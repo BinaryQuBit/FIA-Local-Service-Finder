@@ -1,13 +1,18 @@
 #!/bin/bash
 
-# Move to the backend directory and start the backend server
-# cd /usr/src/app/backend
-# java -jar backend-0.0.1-SNAPSHOT.jar
+# Navigate to backend, clean, install, and run the backend
+cd backend
+./mvnw clean
+./mvnw install -DskipTests
+./mvnw spring-boot:run &
 
-# Start the frontend server
-cd /usr/src/app/frontend
+# Save the PID of the backend process
+BACKEND_PID=$!
+
+# Navigate to frontend and start the frontend server
+cd ../frontend
+npm install
 npm start
 
-# Wait for both processes to end
-# wait $BACKEND_PID
-# wait $FRONTEND_PID
+# Wait for the backend process to complete
+wait $BACKEND_PID

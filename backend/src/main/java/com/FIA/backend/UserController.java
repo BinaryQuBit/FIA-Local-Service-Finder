@@ -5,10 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +30,9 @@ import jakarta.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
+
+    // private static final Dotenv dotenv = Dotenv.load();
+    // private static final String FRONTEND_URL = dotenv.get("REACT_APP_FRONTEND_PORT");
 
     @Autowired
     private UserRepository userRepository;
@@ -130,7 +131,8 @@ public class UserController {
             existingUser.setTokenExpirationTime(LocalDateTime.now().plusMinutes(5));
             userRepository.save(existingUser);
 
-            String resetLink = "http://64.201.200.32:97/ResetPassword?token=" + token + "&email=" + user.getEmail();
+            // String resetLink = FRONTEND_URL + "/ResetPassword?token=" + token + "&email=" + user.getEmail();
+            String resetLink = "https://fia.csproject.org/ResetPassword?token=" + token + "&email=" + user.getEmail();
             emailService.sendResetPasswordEmail(user.getEmail(), resetLink);
 
             return ResponseEntity.ok("Check your email for reset password link");
@@ -280,4 +282,33 @@ public class UserController {
 
         return ResponseEntity.ok(user);
     }
+
+    @PutMapping("/accountsettings")
+    public ResponseEntity<String> updateAccountSettings(@RequestBody User updatedUser, HttpSession session) {
+    String email = (String) session.getAttribute("userEmail");
+    if (email == null) {
+        return ResponseEntity.status(401).body("User is not logged in");
+    }
+
+    User user = userRepository.findById(email).orElse(null);
+    if (user == null) {
+        return ResponseEntity.status(404).body("User not found");
+    }
+
+    // Update the user's details
+    user.setFirstName(updatedUser.getFirstName());
+    user.setLastName(updatedUser.getLastName());
+    user.setCountry(updatedUser.getCountry());
+    user.setCity(updatedUser.getCity());
+    user.setProvince(updatedUser.getProvince());
+    user.setPostalCode(updatedUser.getPostalCode());
+
+    if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
+        user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+    }
+
+    userRepository.save(user);
+    return ResponseEntity.ok("Account settings updated successfully");
+}
+
 }

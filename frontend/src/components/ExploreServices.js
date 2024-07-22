@@ -3,6 +3,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import SignedInHeader from './SignedInHeader';
 import DateTime from './DateTime';
 import './ExploreServices.css';
+const backendUrl = process.env.REACT_APP_BACKEND_PORT;
 
 function ExploreServices() {
   const [posts, setPosts] = useState([]);
@@ -12,7 +13,7 @@ function ExploreServices() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://64.201.200.32:98/api/users/postservices');
+        const response = await fetch(`${backendUrl}/api/users/postservices`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -36,12 +37,12 @@ function ExploreServices() {
   };
 
   const filteredPosts = posts.filter(post =>
-    post.typeService.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    post.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    post.countryService.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    post.cityService.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    post.provinceService.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    post.emailService.toLowerCase().includes(searchTerm.toLowerCase())
+    post.typeService?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    post.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    post.countryService?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    post.cityService?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    post.provinceService?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    post.emailService?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (

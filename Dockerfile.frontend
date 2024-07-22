@@ -1,9 +1,0 @@
-FROM node:lts-bullseye-slim
-
-WORKDIR /usr/src/app/frontend
-COPY frontend/ ./
-RUN npm install
-
-EXPOSE 97
-
-CMD ["npm", "start"]

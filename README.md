@@ -8,7 +8,13 @@
 </div>
 <br>
 
+<div align="center">
+
 Local businesses often struggle to grow due to high competition, causing their websites to rank lower in search results. To address this issue, we are creating a platform where users can both list their services and request services, helping local businesses improve their online visibility and attract more customers.
+
+_<a href="https://fia.csproject.org/" title="FIA-Local Service Finder">FIA-Local Service Finder</a>_
+
+</div>
 
 <br>
 <div style="width: 100%;">

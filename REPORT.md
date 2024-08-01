@@ -21,6 +21,11 @@
         <br>&nbsp;&nbsp;&nbsp;&nbsp;3.3.4 [Tests And Results](#tests-and-results)
         <br>&nbsp;&nbsp;&nbsp;&nbsp;3.3.5 [Limitations](#limitations)
 
+4. [Team Work](#team-work)<br>
+    4.1 [First Meeting](#first-meeting)<br>
+    4.2 [Second Meeting](#second-meeting)<br>
+    4.3 [Third Meeting](#third-meeting)<br>
+    4.4 [Fourth Meeting](#fourth-meeting)<br>
 
 # Introduction
 
@@ -129,3 +134,49 @@
 ### Limitations
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Some limitations include the initial lack of a review and rating system and personalized recommendations, which are planned for future enhancements. Additionally, the platform is currently hosted on a Raspberry Pi which is not designed to handle more than 100 simultaneous users, which may need to be scaled up as the user base grows.
+
+# Team Work
+
+## First Meeting
+
+<b>Time:</b> May 20, 2024, 9:00 am to 11:30 am<br>
+<b>Agenda:</b> Distribution of Project Tasks
+
+| Team Member    | Previous Task | Completion State | Next Task           |
+|----------------|---------------|------------------|---------------------|
+| Feras Aljoudi         | N/A           | N/A              | User Registration & Login |
+| Ihab Mohammad  | N/A           | N/A              |  Search Functionality   |
+| Aman Padda  | N/A           | N/A              | Service Listings |
+
+## Second Meeting
+
+<b>Time:</b> June 08, 2024, 9:00 am to 11:00 am<br>
+<b>Agenda:</b> Review of Individual Progress
+
+| Team Member    | Previous Task           | Completion State | Next Task          |
+|----------------|-------------------------|------------------|--------------------|
+| Feras Aljoudi  | User Registration & Login | 100%              | Profile Management Testing |
+| Ihab Mohammad  | Search Functionality  | 100%              | Search Functionality Testing   |
+| Aman Padda  | Service Listings  | 100%             | Service Listings Testing |
+
+## Third Meeting
+
+<b>Time:</b> June 30, 2024, 9:00 pm to 11:15 pm<br>
+<b>Agenda:</b> Finalizing Features and Testing Plan
+
+| Team Member    | Previous Task                       | Completion State | Next Task               |
+|----------------|-------------------------------------|------------------|-------------------------|
+| Feras Aljoudi          | Profile Management Testing | 100%        | Boundary Value & Integration Testing |
+| Ihab Mohammad  | Search Functionality Testing                    | 100%              | Decision Tables & Use Case Testing |
+| Aman Padda  | Service Listings Testing              | 100%             | State Transition & Equivalence Class Testing |
+
+## Fourth Meeting
+
+<b>Time:</b> July 20, 2024, 9:15 pm to 11:15 pm<br>
+<b>Agenda:</b> Review of Testing Results and Project Completion
+
+| Team Member    | Previous Task                | Completion State | Next Task        |
+|----------------|------------------------------|------------------|------------------|
+| Feras Aljoudi          | Boundary Value & Integration Testing | 100%        | Final Review |
+| Ihab Mohammad  | Decision Tables & Use Case Testing       | 100%        | Final Review |
+| Aman Padda  | State Transition & Equivalence Class Testing    | 100%             | Final Review     |

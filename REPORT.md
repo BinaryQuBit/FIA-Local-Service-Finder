@@ -27,6 +27,8 @@
     4.3 [Third Meeting](#third-meeting)<br>
     4.4 [Fourth Meeting](#fourth-meeting)<br>
 
+5. [Resources](#resources)
+
 # Introduction
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Local businesses frequently face challenges in growing their customer base due to intense competition, which result in their websites ranking lower in search results. To solve this issue, we are designing a platform called "FIA (Find It ALL)-Local-Service-Finder" that aims to enhance the online visibility of local businesses. This platform allows users to list their services as well as request services, thereby fostering a mutually beneficial ecosystem for businesses and customers alike.
@@ -180,3 +182,8 @@
 | Feras Aljoudi          | Boundary Value & Integration Testing | 100%        | Final Review |
 | Ihab Mohammad  | Decision Tables & Use Case Testing       | 100%        | Final Review |
 | Aman Padda  | State Transition & Equivalence Class Testing    | 100%             | Final Review     |
+
+# Resources
+
+- [Presentation Slides](Presentation.pdf)
+- <a href="https://www.youtube.com/watch?v=nFdElVBFcwE" title="Presentation Video">Presentation Video</a>

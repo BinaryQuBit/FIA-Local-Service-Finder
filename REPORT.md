@@ -98,3 +98,26 @@
 #### Reasons for Not Selecting:
 - <b>Partial Feature Set:</b> While better than Solution 1, this solution still lacks a comprehensive review system.
 - <b>Testing</b> Improved reliability but still limited functionality. Testing may not be fully developed to ensure data integrity and system reliability.
+
+## Solution 3
+
+### Final Solution: Comprehensive Web Platform with Full MVPs
+
+#### Description:
+- The final solution incorporates all planned MVPs, offering a robust platform with more features including that users can update the status of there services where they can have them Active, in progress or completed, also the users can renow there post so it comes up at top again, instead of deleting the post and reposting it for the post to be renewed. 
+
+#### Reasons for Selection:
+- <b>Complete Feature Set:</b> This solution meets all design requirements, including comprehensive service management, user-friendly interface, and secure authentication.
+- <b>Scalability:</b> and Reliability: Designed to handle a high number of users and simultaneous requests efficiently.
+- <b>User Experience:</b>User Experience: Creates an easy-to-use and enjoyable interface for better user satisfaction.
+- <b>Testing</b> High reliability. All test cases passed. General features for both customers and employees
+
+### 3.3.1 Components
+
+#### Components Used:
+
+- <b>Frontend:</b> React.js for building a dynamic and responsive user interface.
+- <b>Backend:</b> Spring Boot for handling server-side logic and database interactions.
+- <b>Database:</b> PostgreSQL for reliable and scalable data storage.
+- <b>Authentication:</b> JWT (JSON Web Token) for secure user authentication.
+- <b>Hosting:</b> Raspberry Pi for hosting the platform, ensuring a cost-effective solution.

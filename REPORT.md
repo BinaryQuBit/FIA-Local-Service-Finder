@@ -18,7 +18,7 @@
         <br>&nbsp;&nbsp;&nbsp;&nbsp;3.3.1 [Components](#components)
         <br>&nbsp;&nbsp;&nbsp;&nbsp;3.3.2 [Features](#features)
         <br>&nbsp;&nbsp;&nbsp;&nbsp;3.3.3 [Environmental, Societal, Safety, and Economic Considerations](#environmental-societal-safety-and-economic-considerations)
-        <br>&nbsp;&nbsp;&nbsp;&nbsp;3.3.4 [Tests Cases And Results](#tests-and-results)
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;3.3.4 [Tests And Results](#tests-and-results)
         <br>&nbsp;&nbsp;&nbsp;&nbsp;3.3.5 [Limitations](#limitations)
 
 
@@ -112,7 +112,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Our design positively impacts local communities by enhancing the visibility of local businesses, fostering economic growth. Cost-effective solutions were employed to develop the platform within a $1000 budget without compromising quality. The system is designed to be reliable and safe, ensuring high uptime and secure user data management.
 
-### Tests Cases And Results
+### Tests And Results
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We designed test suites to verify user registration, login, service listing management, search functionality, and post status updates. Each test case was executed, ensuring all functionalities performed as expected. The tests confirmed the robustness and reliability of our solution.
 

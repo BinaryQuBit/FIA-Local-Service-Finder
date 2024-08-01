@@ -4,7 +4,7 @@
 
 To report a vulnerability:
 
-- Send an email to: _<a href="mailto:feras.aljoudi@gmail.com">Feras Aljoudi</a>_, _<a href="mailto:amandippadda@outlook.com">Aman Padda</a>_, or _<a href="mailto:ehabsalem98@gmail.com">Ihab Mohamad</a>_
+- Send an email to: _<a href="mailto:feras.aljoudi@gmail.com">Feras Aljoudi</a>_, _<a href="mailto:ehabsalem98@gmail.com">Ihab Mohamad</a>_ or _<a href="mailto:amandippadda@outlook.com">Aman Padda</a>_
 - Include as much information as possible about the vulnerability, such as:
     - Steps to reproduce the issue.
     - The potential impact.

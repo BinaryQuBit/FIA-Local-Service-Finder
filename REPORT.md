@@ -29,6 +29,8 @@
 
 5. [Resources](#resources)
 
+6. [Contributors](#contributors)
+
 # Introduction
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Local businesses frequently face challenges in growing their customer base due to intense competition, which result in their websites ranking lower in search results. To solve this issue, we are designing a platform called "FIA (Find It ALL)-Local-Service-Finder" that aims to enhance the online visibility of local businesses. This platform allows users to list their services as well as request services, thereby fostering a mutually beneficial ecosystem for businesses and customers alike.
@@ -187,3 +189,17 @@
 
 - [Presentation Slides](Presentation.pdf)
 - <a href="https://www.youtube.com/watch?v=nFdElVBFcwE" title="Presentation Video">Presentation Video</a>
+
+# Contributors
+
+<div align="center">
+
+[<img src="https://github.com/binaryqubit.png" width="80px;" /><br /><sub><a href="https://github.com/binaryqubit">Amandip Padda</a></sub>](https://github.com/BinaryQuBit)
+
+<br>
+
+[<img src="https://github.com/ferasaljoudi.png" width="80px;" /><br /><sub><a href="https://github.com/ferasaljoudi">Feras Aljoudi</a></sub>](https://github.com/ferasaljoudi)
+
+<br>
+
+[<img src="https://github.com/Ehabmohamad.png" width="80px;" /><br /><sub><a href="https://github.com/Ehabmohamad">Ehab Mohamad</a></sub>](https://github.com/Ehabmohamad)

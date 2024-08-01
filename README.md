@@ -127,3 +127,18 @@ _<a href="https://fia.csproject.org/" title="FIA-Local Service Finder">FIA-Local
 ### Resources
 
 - [Presentation Slides](Presentation.pdf)
+
+### Contributors
+
+<div align="center">
+
+[<img src="https://github.com/binaryqubit.png" width="80px;" /><br /><sub><a href="https://github.com/binaryqubit">Amandip Padda</a></sub>](https://github.com/BinaryQuBit)
+
+<br>
+
+[<img src="https://github.com/ferasaljoudi.png" width="80px;" /><br /><sub><a href="https://github.com/ferasaljoudi">Feras Aljoudi</a></sub>](https://github.com/ferasaljoudi)
+
+<br>
+
+[<img src="https://github.com/Ehabmohamad.png" width="80px;" /><br /><sub><a href="https://github.com/Ehabmohamad">Ehab Mohamad</a></sub>](https://github.com/Ehabmohamad)
+

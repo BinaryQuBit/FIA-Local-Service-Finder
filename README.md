@@ -124,3 +124,6 @@ _<a href="https://fia.csproject.org/" title="FIA-Local Service Finder">FIA-Local
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Some limitations include the initial lack of a review and rating system and personalized recommendations, which are planned for future enhancements. Additionally, the platform is currently hosted on a Raspberry Pi which is not designed to handle more than 100 simultaneous users, which may need to be scaled up as the user base grows.
 
+### Resources
+
+- [Presentation Slides](Presentation.pdf)

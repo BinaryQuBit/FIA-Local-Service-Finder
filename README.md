@@ -128,3 +128,19 @@ _<a href="https://fia.csproject.org/" title="FIA-Local Service Finder">FIA-Local
 
 - [Presentation Slides](Presentation.pdf)
 - <a href="https://www.youtube.com/watch?v=nFdElVBFcwE" title="Presentation Video">Presentation Video</a>
+>>>>>>> 8a25f4ec7f704440f61d5a29520686b70206d424
+
+### Contributors
+
+<div align="center">
+
+[<img src="https://github.com/binaryqubit.png" width="80px;" /><br /><sub><a href="https://github.com/binaryqubit">Amandip Padda</a></sub>](https://github.com/BinaryQuBit)
+
+<br>
+
+[<img src="https://github.com/ferasaljoudi.png" width="80px;" /><br /><sub><a href="https://github.com/ferasaljoudi">Feras Aljoudi</a></sub>](https://github.com/ferasaljoudi)
+
+<br>
+
+[<img src="https://github.com/Ehabmohamad.png" width="80px;" /><br /><sub><a href="https://github.com/Ehabmohamad">Ehab Mohamad</a></sub>](https://github.com/Ehabmohamad)
+

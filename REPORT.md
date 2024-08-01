@@ -69,6 +69,32 @@
 
 # Solution
 
-ToDo:
+## Solution 1 
 
-Provide an account of some solutions your team brainstormed to implement the project. Some solutions might not have all the desired features, some might not satisfy the constraints, or both. These solutions come up in your mind while you brainstorm ways of implementing all the features while meeting the constraints. Towards, the end you select a solution that you think has all the features and satisfies all the constraints. Remember that an engineering design is iterative in nature!
+### Basic Web Application
+
+#### Description:
+- This solution involves creating a basic web application where users can signup and manually list their services or request services through simple forms. 
+
+#### Reasons for Not Selecting:
+- <b>Limited Features:</b> This solution lacks advanced features like serch bar to search for a specific service that the user intrested for, insteed of scrolling untill they find a service. 
+- <b>Scalability Issues:</b> The basic setup might not handle a large number of users and simultaneous requests efficiently.
+- <b>User Experience:</b> The application might be too simplistic and not user-friendly, affecting overall user satisfaction for the users.
+- <b>Testing</b> Low reliability. Most test failed.
+
+## Solution 2
+
+### Enhanced Web Platform with Initial MVPs
+
+#### Description:
+- This improved solution involves a more advanced web platform that includes the core functionalities of service listing, search, and user authentication. It also begins to integrate a user-friendly interface and initial security measures.
+
+#### Improvements Over Solution 1:
+- <b>User Experience:</b> This solution focuses on creating a user-friendly and visually appealing interface.
+- <b>Security:</b> Enhanced security features ensure user data protection.
+- <b>Scalability:</b> Better infrastructure planning to handle more users and requests compared to Solution 1.
+- <b>Testing</b> Low reliability. Most test failed.
+
+#### Reasons for Not Selecting:
+- <b>Partial Feature Set:</b> While better than Solution 1, this solution still lacks a comprehensive review system.
+- <b>Testing</b> Improved reliability but still limited functionality. Testing may not be fully developed to ensure data integrity and system reliability.

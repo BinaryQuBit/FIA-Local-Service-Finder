@@ -11,7 +11,15 @@
         <br>&nbsp;&nbsp;&nbsp;&nbsp;2.2.2 [Objectives](#objectives)
         <br>&nbsp;&nbsp;&nbsp;&nbsp;2.2.3 [Constraints](#constraints)
 
-3. [Solution](#solution)
+3. [Solution](#solution)<br>
+    3.1 [First Solution](#first-solution)<br>
+    3.2 [Second Solution](#second-solution)<br>
+    3.3 [Final Solution](#final-solution)
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;3.3.1 [Components](#components)
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;3.3.2 [Features](#features)
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;3.3.3 [Environmental, Societal, Safety, and Economic Considerations](#environmental-societal-safety-and-economic-considerations)
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;3.3.4 [Test Cases And Results](#tests-and-results)
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;3.3.5 [Limitations](#limitations)
 
 
 # Introduction
@@ -69,55 +77,55 @@
 
 # Solution
 
-## Solution 1 
+## First Solution
 
-### Basic Web Application
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Our first solution involved creating a simple listing platform where users could add and search for services. However, this solution lacked user authentication and the ability to update or delete posts. We did not select this solution because it did not meet our requirements for user interaction and security.
 
-#### Description:
-- This solution involves creating a basic web application where users can signup and manually list their services or request services through simple forms. 
+## Second Solution
 
-#### Reasons for Not Selecting:
-- <b>Limited Features:</b> This solution lacks advanced features like serch bar to search for a specific service that the user intrested for, insteed of scrolling untill they find a service. 
-- <b>Scalability Issues:</b> The basic setup might not handle a large number of users and simultaneous requests efficiently.
-- <b>User Experience:</b> The application might be too simplistic and not user-friendly, affecting overall user satisfaction for the users.
-- <b>Testing</b> Low reliability. Most test failed.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The second solution improved upon the first by adding user authentication and the ability to update and delete posts. While this solution addressed the basic functionalities, it still lacked update personal information and had a more complex user interface, which could potentially affect user experience. Thus, it was not selected as the final solution.
 
-## Solution 2
+## Final Solution
 
-### Enhanced Web Platform with Initial MVPs
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Our final solution includes all the desired features and satisfies the constraints. It allows users to register and log in, search for service posts, add new posts, update the status of their own posts, and update personal information. The final solution is better because it provides a comprehensive, user-friendly platform while ensuring security and meeting all functional requirements.
 
-#### Description:
-- This improved solution involves a more advanced web platform that includes the core functionalities of service listing, search, and user authentication. It also begins to integrate a user-friendly interface and initial security measures.
+### Components
 
-#### Improvements Over Solution 1:
-- <b>User Experience:</b> This solution focuses on creating a user-friendly and visually appealing interface.
-- <b>Security:</b> Enhanced security features ensure user data protection.
-- <b>Scalability:</b> Better infrastructure planning to handle more users and requests compared to Solution 1.
-- <b>Testing</b> Low reliability. Most test failed.
+- <b>User Authentication:</b> Ensures secure register, login and account management.
+- <b>Service Listings:</b> Allows users to add, update, and delete posts.
+- <b>Search Functionality:</b> Enables users to search for services based on various criteria.
+- <b>Post Status Management:</b> Users can update the status of their posts to active, in progress, or completed.
+- <b>Profile Management:</b> Users can update their personal information.
+- <b>Testing:</b> Ensures all functionalities work as expected.
 
-#### Reasons for Not Selecting:
-- <b>Partial Feature Set:</b> While better than Solution 1, this solution still lacks a comprehensive review system.
-- <b>Testing</b> Improved reliability but still limited functionality. Testing may not be fully developed to ensure data integrity and system reliability.
+### Features
 
-## Solution 3
+| Feature                    | Description                            |
+|----------------------------|----------------------------------------|
+| User Registration & Login  | Secure user authentication             |
+| Service Listings           | Add, update, delete service posts      |
+| Search Functionality       | Search for services based on criteria  |
+| Post Status Management     | Update status of posts                 |
+| Profile Management         | Update personal information            |
 
-### Final Solution: Comprehensive Web Platform with Full MVPs
+### Environmental, Societal, Safety, and Economic Considerations
 
-#### Description:
-- The final solution incorporates all planned MVPs, offering a robust platform with more features including that users can update the status of there services where they can have them Active, in progress or completed, also the users can renow there post so it comes up at top again, instead of deleting the post and reposting it for the post to be renewed. 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Our design positively impacts local communities by enhancing the visibility of local businesses, fostering economic growth. Cost-effective solutions were employed to develop the platform within a $1000 budget without compromising quality. The system is designed to be reliable and safe, ensuring high uptime and secure user data management.
 
-#### Reasons for Selection:
-- <b>Complete Feature Set:</b> This solution meets all design requirements, including comprehensive service management, user-friendly interface, and secure authentication.
-- <b>Scalability:</b> and Reliability: Designed to handle a high number of users and simultaneous requests efficiently.
-- <b>User Experience:</b>User Experience: Creates an easy-to-use and enjoyable interface for better user satisfaction.
-- <b>Testing</b> High reliability. All test cases passed. General features for both customers and employees
+### Test Cases And Results
 
-### 3.3.1 Components
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We designed test suites to verify user registration, login, service listing management, search functionality, and post status updates. Each test case was executed, ensuring all functionalities performed as expected. The tests confirmed the robustness and reliability of our solution.
 
-#### Components Used:
+- [Boundary Value Testing](Testing/FirstIteration/BoundaryValueTesting.pdf)
+- [Decision Tables Testing](Testing/FirstIteration/DecisionTablesTesting.pdf)
+- [State Transition Testing](Testing/FirstIteration/StateTransitionTesting.pdf)
+- [Use Case Testing](Testing/FirstIteration/UseCaseTesting.pdf)
+- [Boundary Value Testing](Testing/FirstIteration/BoundaryValueTesting.pdf)
+- [Boundary Value Testing](Testing/FirstIteration/BoundaryValueTesting.pdf)
+- [Boundary Value Testing](Testing/FirstIteration/BoundaryValueTesting.pdf)
+- [Boundary Value Testing](Testing/FirstIteration/BoundaryValueTesting.pdf)
 
-- <b>Frontend:</b> React.js for building a dynamic and responsive user interface.
-- <b>Backend:</b> Spring Boot for handling server-side logic and database interactions.
-- <b>Database:</b> PostgreSQL for reliable and scalable data storage.
-- <b>Authentication:</b> JWT (JSON Web Token) for secure user authentication.
-- <b>Hosting:</b> Raspberry Pi for hosting the platform, ensuring a cost-effective solution.
+
+### Limitations
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Some limitations include the initial lack of a review and rating system and personalized recommendations, which are planned for future enhancements. Additionally, the platform is currently hosted on a Raspberry Pi which is not designed to handle more than 100 simultaneous users, which may need to be scaled up as the user base grows.

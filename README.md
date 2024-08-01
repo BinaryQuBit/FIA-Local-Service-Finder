@@ -62,3 +62,65 @@ The design requirements for our platform are structured around a series of Minim
 - <b>Reliability:</b> The system must have high uptime and be reliable, ensuring that users can access the platform whenever needed. It should handle at least 100 simultaneous users without performance issues
 - <b>Societal impacts:</b> The platform must positively impact local communities by helping local businesses improve their online visibility and attract more customers
 - <b>Ethics:</b> The platform should adhere to ethical standards, ensuring fair treatment of all users, preventing discrimination, and avoiding misuse for fraudulent or harmful activities
+
+# Solution
+
+## First Solution
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Our first solution involved creating a simple listing platform where users could add and search for services. However, this solution lacked user authentication and the ability to update or delete posts. We did not select this solution because it did not meet our requirements for user interaction and security.
+
+## Second Solution
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The second solution improved upon the first by adding user authentication and the ability to update and delete posts. While this solution addressed the basic functionalities, it still lacked update personal information and had a more complex user interface, which could potentially affect user experience. Thus, it was not selected as the final solution.
+
+## Final Solution
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Our final solution includes all the desired features and satisfies the constraints. It allows users to register and log in, search for service posts, add new posts, update the status of their own posts, and update personal information. The final solution is better because it provides a comprehensive, user-friendly platform while ensuring security and meeting all functional requirements.
+
+<div align="center">
+
+_<a href="https://fia.csproject.org/" title="FIA-Local Service Finder">FIA-Local Service Finder</a>_
+
+</div>
+
+### Components
+
+- <b>User Authentication:</b> Ensures secure register, login and account management.
+- <b>Service Listings:</b> Allows users to add, update, and delete posts.
+- <b>Search Functionality:</b> Enables users to search for services based on various criteria.
+- <b>Post Status Management:</b> Users can update the status of their posts to active, in progress, or completed.
+- <b>Profile Management:</b> Users can update their personal information.
+- <b>Testing:</b> Ensures all functionalities work as expected.
+
+### Features
+
+| Feature                    | Description                            |
+|----------------------------|----------------------------------------|
+| User Registration & Login  | Secure user authentication             |
+| Service Listings           | Add, update, delete service posts      |
+| Search Functionality       | Search for services based on criteria  |
+| Post Status Management     | Update status of posts                 |
+| Profile Management         | Update personal information            |
+
+### Environmental, Societal, Safety, and Economic Considerations
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Our design positively impacts local communities by enhancing the visibility of local businesses, fostering economic growth. Cost-effective solutions were employed to develop the platform within a $1000 budget without compromising quality. The system is designed to be reliable and safe, ensuring high uptime and secure user data management.
+
+### Tests And Results
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We designed test suites to verify user registration, login, service listing management, search functionality, and post status updates. Each test case was executed, ensuring all functionalities performed as expected. The tests confirmed the robustness and reliability of our solution.
+
+<b>The following documents detail the various types of tests conducted:</b>
+
+- [Boundary Value Testing](Testing/FirstIteration/BoundaryValueTesting.pdf)
+- [Decision Tables Testing](Testing/FirstIteration/DecisionTablesTesting.pdf)
+- [State Transition Testing](Testing/SecondIteration/StateTransitionTesting.pdf)
+- [Use Case Testing](Testing/SecondIteration/UseCaseTesting.pdf)
+- [DataFlow Testing](Testing/ThirdIteration/DataFlowTesting.pdf)
+- [Equivalence Class Testing](Testing/ThirdIteration/EquivalenceClassTesting.pdf)
+- [Integration Testing](Testing/ThirdIteration/IntegrationTesting.pdf)
+
+### Limitations
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Some limitations include the initial lack of a review and rating system and personalized recommendations, which are planned for future enhancements. Additionally, the platform is currently hosted on a Raspberry Pi which is not designed to handle more than 100 simultaneous users, which may need to be scaled up as the user base grows.
+

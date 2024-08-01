@@ -116,15 +116,15 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We designed test suites to verify user registration, login, service listing management, search functionality, and post status updates. Each test case was executed, ensuring all functionalities performed as expected. The tests confirmed the robustness and reliability of our solution.
 
+<b>The following documents detail the various types of tests conducted:</b>
+
 - [Boundary Value Testing](Testing/FirstIteration/BoundaryValueTesting.pdf)
 - [Decision Tables Testing](Testing/FirstIteration/DecisionTablesTesting.pdf)
-- [State Transition Testing](Testing/FirstIteration/StateTransitionTesting.pdf)
-- [Use Case Testing](Testing/FirstIteration/UseCaseTesting.pdf)
-- [Boundary Value Testing](Testing/FirstIteration/BoundaryValueTesting.pdf)
-- [Boundary Value Testing](Testing/FirstIteration/BoundaryValueTesting.pdf)
-- [Boundary Value Testing](Testing/FirstIteration/BoundaryValueTesting.pdf)
-- [Boundary Value Testing](Testing/FirstIteration/BoundaryValueTesting.pdf)
-
+- [State Transition Testing](Testing/SecondIteration/StateTransitionTesting.pdf)
+- [Use Case Testing](Testing/SecondIteration/UseCaseTesting.pdf)
+- [DataFlow Testing](Testing/ThirdIteration/DataFlowTesting.pdf)
+- [Equivalence Class Testing](Testing/ThirdIteration/EquivalenceClassTesting.pdf)
+- [Integration Testing](Testing/ThirdIteration/IntegrationTesting.pdf)
 
 ### Limitations
 

@@ -127,3 +127,4 @@ _<a href="https://fia.csproject.org/" title="FIA-Local Service Finder">FIA-Local
 ### Resources
 
 - [Presentation Slides](Presentation.pdf)
+- <a href="https://www.youtube.com/watch?v=nFdElVBFcwE" title="Presentation Video">Presentation Video</a>
